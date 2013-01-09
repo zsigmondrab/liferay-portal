@@ -23,6 +23,8 @@ ActionUtil.getGroup(request);
 
 Group group = (Group)request.getAttribute(WebKeys.GROUP);
 
+group = group.toEscapedModel();
+
 long groupId = BeanParamUtil.getLong(group, request, "groupId");
 
 MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(WebKeys.MEMBERSHIP_REQUEST);
@@ -50,7 +52,7 @@ MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(We
 	<aui:fieldset>
 		<c:if test="<%= Validator.isNotNull(group.getDescription()) %>">
 			<aui:field-wrapper label="description">
-				<%= HtmlUtil.escape(group.getDescription()) %>
+				<%= group.getDescription() %>
 			</aui:field-wrapper>
 		</c:if>
 
