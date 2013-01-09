@@ -50,7 +50,7 @@ MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(We
 	<aui:fieldset>
 		<c:if test="<%= Validator.isNotNull(group.getDescription()) %>">
 			<aui:field-wrapper label="description">
-				<%= HtmlUtil.escape(group.getDescription()) %>
+				<%= group.getDescription() %>
 			</aui:field-wrapper>
 		</c:if>
 
