@@ -57,7 +57,7 @@ if ((group != null) && !group.isRoot()) {
 
 			<c:if test="<%= Validator.isNotNull(group.getDescription()) %>">
 				<div class="description">
-					<%= HtmlUtil.escape(group.getDescription()) %>
+					<%= group.getDescription() %>
 				</div>
 			</c:if>
 
