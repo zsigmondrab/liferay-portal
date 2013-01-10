@@ -51,6 +51,8 @@ List resultRows = searchContainer.getResultRows();
 for (int i = 0; i < results.size(); i++) {
 	Company company2 = (Company)results.get(i);
 
+	company2 = company2.toEscapedModel();
+
 	ResultRow row = new ResultRow(company2, company2.getCompanyId(), i);
 
 	PortletURL rowURL = renderResponse.createRenderURL();
