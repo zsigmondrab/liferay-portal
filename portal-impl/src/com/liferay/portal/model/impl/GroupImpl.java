@@ -14,6 +14,7 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -136,6 +137,7 @@ public class GroupImpl extends GroupBaseImpl {
 		return getDescriptiveName(LocaleUtil.getDefault());
 	}
 
+	@AutoEscape
 	public String getDescriptiveName(Locale locale)
 		throws PortalException, SystemException {
 
