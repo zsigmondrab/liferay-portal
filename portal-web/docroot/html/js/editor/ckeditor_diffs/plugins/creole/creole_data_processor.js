@@ -362,9 +362,7 @@
 			var hrefAttribute = element.getAttribute('href');
 
 			if (CKEDITOR.env.ie && (CKEDITOR.env.version <= 8)) {
-				var location = window.location;
-
-				var protocolHostPathname = location.protocol + '//' + location.host + location.pathname;
+				var protocolHostPathname = document.getElementById(CKEDITOR.config.portletNamespace + "originalRedirect").value;
 
 				protocolHostPathname = protocolHostPathname.substr(0, protocolHostPathname.lastIndexOf('/') + 1);
 
