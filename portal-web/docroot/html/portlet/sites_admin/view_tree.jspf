@@ -18,9 +18,12 @@
 long groupId = ParamUtil.getLong(request, "groupId", GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 Group group = null;
+Group escapedGroup = null;
 
 if (groupId > 0) {
 	group = GroupServiceUtil.getGroup(groupId);
+
+	escapedGroup = group.toEscapedModel();
 }
 
 long parentGroupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
@@ -45,8 +48,9 @@ if ((group != null) && !group.isRoot()) {
 	<liferay-ui:header
 		backLabel="<%= parentGroupName %>"
 		backURL="<%= headerBackURL.toString() %>"
+		escapeXml="<%= false %>"
 		localizeTitle="<%= false %>"
-		title="<%= group.getDescriptiveName() %>"
+		title="<%= escapedGroup.getDescriptiveName() %>"
 	/>
 </c:if>
 
@@ -57,7 +61,7 @@ if ((group != null) && !group.isRoot()) {
 
 			<c:if test="<%= Validator.isNotNull(group.getDescription()) %>">
 				<div class="description">
-					<%= group.getDescription() %>
+					<%= escapedGroup.getDescription() %>
 				</div>
 			</c:if>
 
