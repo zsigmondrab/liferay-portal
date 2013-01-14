@@ -190,6 +190,10 @@ if (step == 1) {
 			<%
 			Organization organization = OrganizationServiceUtil.getOrganization(organizationId);
 
+			Group organizationGroup = organization.getGroup();
+
+			Group escapedOrganizationGroup = organizationGroup.toEscapedModel();
+
 			portletURL.setParameter("step", "1");
 
 			String breadcrumbs = "<a href=\"" + portletURL.toString() + "\">" + LanguageUtil.get(pageContext, "organizations") + "</a> &raquo; " + HtmlUtil.escape(organization.getName());
@@ -247,18 +251,20 @@ if (step == 1) {
 					<liferay-util:param name="classHoverName" value="<%= RolesAdminUtil.getCssClassName(role) %>" />
 
 					<%
+					Role escapedRole = role.toEscapedModel();
+
 					StringBundler sb = new StringBundler(13);
 
 					sb.append("javascript:opener.");
 					sb.append(renderResponse.getNamespace());
 					sb.append("selectRole('");
-					sb.append(role.getRoleId());
+					sb.append(escapedRole.getRoleId());
 					sb.append("', '");
-					sb.append(UnicodeFormatter.toString(role.getTitle(locale)));
+					sb.append(UnicodeFormatter.toString(escapedRole.getTitle(locale)));
 					sb.append("', '");
 					sb.append("organizationRoles");
 					sb.append("', '");
-					sb.append(UnicodeFormatter.toString(organization.getGroup().getDescriptiveName(locale)));
+					sb.append(UnicodeFormatter.toString(escapedOrganizationGroup.getDescriptiveName(locale)));
 					sb.append("', '");
 					sb.append(organization.getGroup().getGroupId());
 					sb.append("'); window.close();");
@@ -269,7 +275,7 @@ if (step == 1) {
 					<liferay-ui:search-container-column-text
 						href="<%= rowHREF %>"
 						name="title"
-						value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+						value="<%= escapedRole.getTitle(locale) %>"
 					/>
 				</liferay-ui:search-container-row>
 

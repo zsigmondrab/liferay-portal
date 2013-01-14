@@ -23,6 +23,8 @@ ActionUtil.getGroup(request);
 
 Group group = (Group)request.getAttribute(WebKeys.GROUP);
 
+Group escapedGroup = group.toEscapedModel();
+
 long groupId = BeanParamUtil.getLong(group, request, "groupId");
 
 String friendlyURL = BeanParamUtil.getString(group, request, "friendlyURL");
@@ -44,8 +46,9 @@ MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(We
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
+		escapeXml="<%= false %>"
 		localizeTitle="<%= false %>"
-		title='<%= LanguageUtil.format(pageContext, "reply-membership-request-for-x", group.getDescriptiveName(locale)) %>'
+		title='<%= LanguageUtil.format(pageContext, "reply-membership-request-for-x", escapedGroup.getDescriptiveName(locale)) %>'
 	/>
 
 	<liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />
@@ -76,7 +79,7 @@ MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(We
 	<aui:fieldset>
 		<c:if test="<%= Validator.isNotNull(group.getDescription()) %>">
 			<aui:field-wrapper label="description">
-				<%= HtmlUtil.escape(group.getDescription()) %>
+				<%= escapedGroup.getDescription() %>
 			</aui:field-wrapper>
 		</c:if>
 

@@ -40,11 +40,13 @@ List groupNames = (List)objArray[8];
 			for (int i = 0; i < groups.size(); i++) {
 				Group group = (Group)groups.get(i);
 
+				Group escapedGroup = group.toEscapedModel();
+
 				String taglibHREF = "javascript:" + renderResponse.getNamespace() + "removeGroup(" + i + ", '" + target + "');";
 		%>
 
 				<span class="lfr-token">
-					<span class="lfr-token-text"><%= group.getDescriptiveName(locale) %></span>
+					<span class="lfr-token-text"><%= escapedGroup.getDescriptiveName(locale) %></span>
 
 					<aui:a cssClass="aui-icon aui-icon-close lfr-token-close" href="<%= taglibHREF %>" />
 				</span>

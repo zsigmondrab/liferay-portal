@@ -100,31 +100,32 @@
 
 									<liferay-ui:search-container-row
 										className="com.liferay.portal.model.Group"
-										modelVar="childGroup"
+										escapedModel="<%= true %>"
+										modelVar="escapedChildGroup"
 									>
 
 										<%
 										LayoutSet layoutSet = null;
 
-										if (childGroup.hasPublicLayouts()) {
-											layoutSet = childGroup.getPublicLayoutSet();
+										if (escapedChildGroup.hasPublicLayouts()) {
+											layoutSet = escapedChildGroup.getPublicLayoutSet();
 										}
 										else {
-											layoutSet = childGroup.getPrivateLayoutSet();
+											layoutSet = escapedChildGroup.getPrivateLayoutSet();
 										}
 										%>
 
 										<liferay-ui:app-view-entry
 											assetCategoryClassName="<%= Group.class.getName() %>"
-											assetCategoryClassPK="<%= childGroup.getGroupId() %>"
+											assetCategoryClassPK="<%= escapedChildGroup.getGroupId() %>"
 											assetTagClassName="<%= Group.class.getName() %>"
-											assetTagClassPK="<%= childGroup.getGroupId() %>"
-											description="<%= childGroup.getDescription() %>"
+											assetTagClassPK="<%= escapedChildGroup.getGroupId() %>"
+											description="<%= escapedChildGroup.getDescription() %>"
 											displayStyle="<%= displayStyle %>"
 											showCheckbox="<%= false %>"
 											thumbnailSrc='<%= themeDisplay.getPathImage() + "/layout_set_logo?img_id=" + layoutSet.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(layoutSet.getLogoId()) %>'
-											title="<%= HtmlUtil.escape(childGroup.getDescriptiveName(locale)) %>"
-											url="<%= PortalUtil.getGroupFriendlyURL(childGroup, !childGroup.hasPublicLayouts(), themeDisplay) %>"
+											title="<%= escapedChildGroup.getDescriptiveName(locale) %>"
+											url="<%= PortalUtil.getGroupFriendlyURL(escapedChildGroup, !escapedChildGroup.hasPublicLayouts(), themeDisplay) %>"
 										/>
 									</liferay-ui:search-container-row>
 
@@ -201,6 +202,8 @@ private void _buildSitesList(Group rootGroup, Group curGroup, List<Group> branch
 	sb.append("\">");
 
 	for (Group childGroup : childGroups) {
+		Group escapedChildGroup = childGroup.toEscapedModel();
+
 		boolean open = false;
 
 		if (showHierarchy) {
@@ -237,7 +240,7 @@ private void _buildSitesList(Group rootGroup, Group curGroup, List<Group> branch
 		sb.append(HtmlUtil.escapeHREF(PortalUtil.getGroupFriendlyURL(childGroup, !childGroup.hasPublicLayouts(), themeDisplay)));
 		sb.append("\"> ");
 
-		sb.append(HtmlUtil.escape(childGroup.getDescriptiveName(themeDisplay.getLocale())));
+		sb.append(escapedChildGroup.getDescriptiveName(themeDisplay.getLocale()));
 
 		sb.append("</a>");
 

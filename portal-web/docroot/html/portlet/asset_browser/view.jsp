@@ -92,6 +92,8 @@ portletURL.setParameter("callback", callback);
 
 			Group group = GroupLocalServiceUtil.getGroup(assetEntry.getGroupId());
 
+			Group escapedGroup = group.toEscapedModel();
+
 			if (assetEntry.getEntryId() != refererAssetEntryId) {
 				StringBundler sb = new StringBundler(11);
 
@@ -104,7 +106,7 @@ portletURL.setParameter("callback", callback);
 				sb.append("', '");
 				sb.append(assetEntry.getTitle(locale));
 				sb.append("', '");
-				sb.append(group.getDescriptiveName(locale));
+				sb.append(escapedGroup.getDescriptiveName(locale));
 				sb.append("');Liferay.Util.getWindow().close();");
 
 				rowHREF = sb.toString();
@@ -128,7 +130,7 @@ portletURL.setParameter("callback", callback);
 
 			// Scope
 
-			row.addText(group.getDescriptiveName(locale), rowHREF);
+			row.addText(escapedGroup.getDescriptiveName(locale), rowHREF);
 
 			// Add result row
 

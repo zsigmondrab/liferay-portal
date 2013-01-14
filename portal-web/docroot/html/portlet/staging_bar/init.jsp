@@ -37,6 +37,7 @@ if (selPlid > 0) {
 }
 
 Group group = null;
+Group escapedLiveGroup = null;
 Group liveGroup = null;
 Group stagingGroup = null;
 
@@ -66,6 +67,8 @@ if (group != null) {
 			stagingGroup = group.getStagingGroup();
 		}
 	}
+
+	escapedLiveGroup = liveGroup.toEscapedModel();
 }
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);

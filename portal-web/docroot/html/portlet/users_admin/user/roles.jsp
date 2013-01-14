@@ -111,6 +111,8 @@ userGroupRoles.addAll(siteRoles);
 		List<Role> groupRoles = RoleLocalServiceUtil.getGroupRoles(group.getGroupId());
 
 		if (!groupRoles.isEmpty()) {
+			Group escapedGroup = group.toEscapedModel();
+
 			Role groupRole = groupRoles.get(0);
 		%>
 
@@ -119,7 +121,7 @@ userGroupRoles.addAll(siteRoles);
 
 			<liferay-ui:search-container-column-text
 				name="group"
-				value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
+				value="<%= escapedGroup.getDescriptiveName(locale) %>"
 			/>
 			<liferay-ui:search-container-column-text
 				name="title"

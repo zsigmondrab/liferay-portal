@@ -131,6 +131,8 @@ assetBrowserURL.setParameter("groupId", scopeGroupId.toString());
 		String assetLinkEntryType = ResourceActionsUtil.getModelResource(locale, assetLinkEntry.getClassName());
 		String assetLinkEntryTitle = assetLinkEntry.getTitle(locale);
 		Group assetLinkEntryGroup = GroupLocalServiceUtil.getGroup(assetLinkEntry.getGroupId());
+
+		Group escapedAssetLinkEntryGroup = assetLinkEntryGroup.toEscapedModel();
 		%>
 
 		<liferay-ui:search-container-column-text
@@ -145,7 +147,7 @@ assetBrowserURL.setParameter("groupId", scopeGroupId.toString());
 
 		<liferay-ui:search-container-column-text
 			name="scope"
-			value="<%= assetLinkEntryGroup.getDescriptiveName(locale) %>"
+			value="<%= escapedAssetLinkEntryGroup.getDescriptiveName(locale) %>"
 		/>
 
 		<liferay-ui:search-container-column-text>

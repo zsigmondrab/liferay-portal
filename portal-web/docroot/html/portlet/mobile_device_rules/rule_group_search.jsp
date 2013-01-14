@@ -45,9 +45,11 @@ if (displayTerms.getGroupId() == 0) {
 
 					<%
 					Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+					Group escapedGroup = group.toEscapedModel();
 					%>
 
-					<aui:option label="<%= group.getDescriptiveName(locale) %>" selected="<%= displayTerms.getGroupId() == groupId %>" value="<%= groupId %>" />
+					<aui:option label="<%= escapedGroup.getDescriptiveName(locale) %>" selected="<%= displayTerms.getGroupId() == groupId %>" value="<%= groupId %>" />
 				</aui:select>
 			</c:when>
 			<c:otherwise>

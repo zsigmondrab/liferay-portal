@@ -107,7 +107,9 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 			for (long groupId : groupIds) {
 				Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-				scopesLeftList.add(new KeyValuePair(_getScopeId(group, scopeGroupId), _getName(themeDisplay, group, locale)));
+				Group escapedGroup = group.toEscapedModel();
+
+				scopesLeftList.add(new KeyValuePair(_getScopeId(group, scopeGroupId), _getName(themeDisplay, escapedGroup, locale)));
 			}
 
 			// Right list
@@ -117,8 +119,10 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 			Arrays.sort(groupIds);
 
 			for (Group group : groups) {
+				Group escapedGroup = group.toEscapedModel();
+
 				if (Arrays.binarySearch(groupIds, group.getGroupId()) < 0) {
-					scopesRightList.add(new KeyValuePair(_getScopeId(group, scopeGroupId), _getName(themeDisplay, group, locale)));
+					scopesRightList.add(new KeyValuePair(_getScopeId(group, scopeGroupId), _getName(themeDisplay, escapedGroup, locale)));
 				}
 			}
 
@@ -272,7 +276,7 @@ private String _getName(ThemeDisplay themeDisplay, Group group, Locale locale) t
 		sb.append(LanguageUtil.get(locale, "current-site"));
 		sb.append(StringPool.SPACE);
 		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(HtmlUtil.escape(group.getDescriptiveName(locale)));
+		sb.append(group.getDescriptiveName(locale));
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		name = sb.toString();
@@ -283,7 +287,7 @@ private String _getName(ThemeDisplay themeDisplay, Group group, Locale locale) t
 		sb.append(LanguageUtil.get(locale, "current-page"));
 		sb.append(StringPool.SPACE);
 		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(HtmlUtil.escape(group.getDescriptiveName(locale)));
+		sb.append(group.getDescriptiveName(locale));
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		name = sb.toString();
@@ -292,7 +296,7 @@ private String _getName(ThemeDisplay themeDisplay, Group group, Locale locale) t
 		name = LanguageUtil.get(locale, "default");
 	}
 	else {
-		name = HtmlUtil.escape(group.getDescriptiveName(locale));
+		name = group.getDescriptiveName(locale);
 	}
 
 	return name;

@@ -69,6 +69,8 @@ if (modelResource.equals(Layout.class.getName())) {
 	groupId = group.getGroupId();
 }
 
+Group escapedGroup = group.toEscapedModel();
+
 Resource resource = null;
 
 try {
@@ -405,7 +407,7 @@ definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 
 						if (Validator.isNotNull(preselectedMsg)) {
 							buffer.append("onclick=\"return false;\" onmouseover=\"Liferay.Portal.ToolTip.show(this, '");
-							buffer.append(UnicodeLanguageUtil.format(pageContext, preselectedMsg, new Object[] {role.getTitle(locale), ResourceActionsUtil.getAction(pageContext, action), Validator.isNull(modelResource) ? selResourceDescription : ResourceActionsUtil.getModelResource(locale, resource.getName()), HtmlUtil.escape(group.getDescriptiveName(locale))}));
+							buffer.append(UnicodeLanguageUtil.format(pageContext, preselectedMsg, new Object[] {role.getTitle(locale), ResourceActionsUtil.getAction(pageContext, action), Validator.isNull(modelResource) ? selResourceDescription : ResourceActionsUtil.getModelResource(locale, resource.getName()), escapedGroup.getDescriptiveName(locale)}));
 							buffer.append("'); return false;\" ");
 						}
 

@@ -51,9 +51,11 @@ String portletURLString = portletURL.toString();
 		long groupId = pkParser.getLong("groupId");
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		Group escapedGroup = group.toEscapedModel();
 		%>
 
-		<liferay-ui:message arguments="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" key="site-x-does-not-have-any-private-pages" />
+		<liferay-ui:message arguments="<%= escapedGroup.getDescriptiveName(locale) %>" key="site-x-does-not-have-any-private-pages" />
 	</liferay-ui:error>
 
 	<liferay-ui:error exception="<%= RequiredGroupException.class %>">

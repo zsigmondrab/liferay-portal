@@ -44,7 +44,9 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 					for (int i = 0; i < mySites.size(); i++) {
 						Group group = mySites.get(i);
 
-						String groupName = HtmlUtil.escape(group.getDescriptiveName(locale));
+						Group escapedGroup = group.toEscapedModel();
+
+						String groupName = escapedGroup.getDescriptiveName(locale);
 
 						if (group.isUser()) {
 							groupName = LanguageUtil.get(pageContext, "my-site");
