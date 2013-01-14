@@ -28,6 +28,7 @@ if (portletName.equals(PortletKeys.LAYOUTS_ADMIN) || portletName.equals(PortletK
 Group selGroup = (Group)request.getAttribute(WebKeys.GROUP);
 
 Group liveGroup = null;
+Group escapedLiveGroup = null;
 Group stagingGroup = null;
 
 if (selGroup.isStagingGroup()) {
@@ -41,6 +42,8 @@ else {
 		stagingGroup = selGroup.getStagingGroup();
 	}
 }
+
+escapedLiveGroup = liveGroup.toEscapedModel();
 
 Group group = null;
 

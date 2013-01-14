@@ -22,8 +22,8 @@
 >
 
 	<%
-	if (curGroup.isOrganization()) {
-		Organization organization = OrganizationLocalServiceUtil.getOrganization(curGroup.getOrganizationId());
+	if (escapedCurGroup.isOrganization()) {
+		Organization organization = OrganizationLocalServiceUtil.getOrganization(escapedCurGroup.getOrganizationId());
 
 		buffer.append("<img align=\"left\" alt=\"");
 		buffer.append(LanguageUtil.format(pageContext, "belongs-to-an-organization-of-type-x", LanguageUtil.get(pageContext, organization.getType())));
@@ -39,16 +39,16 @@
 		buffer.append("/common/site_icon.png\">");
 	}
 
-	buffer.append(HtmlUtil.escape(curGroup.getDescriptiveName(locale)));
+	buffer.append(escapedCurGroup.getDescriptiveName(locale));
 
-	if (!curGroup.isOrganization()) {
+	if (!escapedCurGroup.isOrganization()) {
 		List<String> names = new ArrayList<String>();
 
-		boolean organizationUser = SitesUtil.isOrganizationUser(company.getCompanyId(), curGroup, user, searchTerms, names);
+		boolean organizationUser = SitesUtil.isOrganizationUser(company.getCompanyId(), escapedCurGroup, user, searchTerms, names);
 
 		row.setParameter("organizationUser", organizationUser);
 
-		boolean userGroupUser = SitesUtil.isUserGroupUser(company.getCompanyId(), curGroup, user, names);
+		boolean userGroupUser = SitesUtil.isUserGroupUser(company.getCompanyId(), escapedCurGroup, user, names);
 
 		row.setParameter("userGroupUser", userGroupUser);
 
@@ -56,10 +56,10 @@
 
 		if (organizationUser || userGroupUser) {
 			if (names.size() == 1) {
-				message = LanguageUtil.format(pageContext, "you-are-a-member-of-x-because-you-belong-to-x", new Object[] {HtmlUtil.escape(curGroup.getDescriptiveName(locale)), names.get(0)});
+				message = LanguageUtil.format(pageContext, "you-are-a-member-of-x-because-you-belong-to-x", new Object[] {escapedCurGroup.getDescriptiveName(locale), names.get(0)});
 			}
 			else {
-				message = LanguageUtil.format(pageContext, "you-are-a-member-of-x-because-you-belong-to-x-and-x", new Object[] {HtmlUtil.escape(curGroup.getDescriptiveName(locale)), StringUtil.merge(names.toArray(new String[names.size()]), ", "), names.get(names.size() - 1)});
+				message = LanguageUtil.format(pageContext, "you-are-a-member-of-x-because-you-belong-to-x-and-x", new Object[] {escapedCurGroup.getDescriptiveName(locale), StringUtil.merge(names.toArray(new String[names.size()]), ", "), names.get(names.size() - 1)});
 			}
 	%>
 
@@ -78,7 +78,7 @@
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"
 	name="type"
-	value="<%= LanguageUtil.get(pageContext, curGroup.getTypeLabel()) %>"
+	value="<%= LanguageUtil.get(pageContext, escapedCurGroup.getTypeLabel()) %>"
 />
 
 <liferay-ui:search-container-column-text
@@ -90,7 +90,7 @@
 	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 	userParams.put("inherit", true);
-	userParams.put("usersGroups", new Long(curGroup.getGroupId()));
+	userParams.put("usersGroups", new Long(escapedCurGroup.getGroupId()));
 
 	int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams);
 
@@ -102,8 +102,8 @@
 
 	LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
-	organizationParams.put("groupOrganization", new Long(curGroup.getGroupId()));
-	organizationParams.put("organizationsGroups", new Long(curGroup.getGroupId()));
+	organizationParams.put("groupOrganization", new Long(escapedCurGroup.getGroupId()));
+	organizationParams.put("organizationsGroups", new Long(escapedCurGroup.getGroupId()));
 
 	int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, searchTerms.getKeywords(), null, null, null, organizationParams);
 
@@ -115,7 +115,7 @@
 
 	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 
-	userGroupParams.put("userGroupsGroups", new Long(curGroup.getGroupId()));
+	userGroupParams.put("userGroupsGroups", new Long(escapedCurGroup.getGroupId()));
 
 	int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), null, null, userGroupParams);
 
@@ -135,19 +135,19 @@
 <c:if test="<%= PropsValues.LIVE_USERS_ENABLED %>">
 	<liferay-ui:search-container-column-text
 		name="online-now"
-		value="<%= String.valueOf(LiveUsers.getGroupUsersCount(company.getCompanyId(), curGroup.getGroupId())) %>"
+		value="<%= String.valueOf(LiveUsers.getGroupUsersCount(company.getCompanyId(), escapedCurGroup.getGroupId())) %>"
 	/>
 </c:if>
 
 <liferay-ui:search-container-column-text
 	name="active"
-	value='<%= LanguageUtil.get(pageContext, (curGroup.isActive() ? "yes" : "no")) %>'
+	value='<%= LanguageUtil.get(pageContext, (escapedCurGroup.isActive() ? "yes" : "no")) %>'
 />
 
 <c:if test="<%= permissionChecker.isGroupAdmin(themeDisplay.getScopeGroupId()) %>">
 	<liferay-ui:search-container-column-text
 		name="pending-requests"
-		value="<%= (curGroup.getType() == GroupConstants.TYPE_SITE_RESTRICTED) ? String.valueOf(MembershipRequestLocalServiceUtil.searchCount(curGroup.getGroupId(), MembershipRequestConstants.STATUS_PENDING)) : StringPool.BLANK %>"
+		value="<%= (escapedCurGroup.getType() == GroupConstants.TYPE_SITE_RESTRICTED) ? String.valueOf(MembershipRequestLocalServiceUtil.searchCount(escapedCurGroup.getGroupId(), MembershipRequestConstants.STATUS_PENDING)) : StringPool.BLANK %>"
 	/>
 </c:if>
 
@@ -156,7 +156,7 @@
 >
 	<liferay-ui:asset-tags-summary
 		className="<%= Group.class.getName() %>"
-		classPK="<%= curGroup.getGroupId() %>"
+		classPK="<%= escapedCurGroup.getGroupId() %>"
 	/>
 </liferay-ui:search-container-column-text>
 

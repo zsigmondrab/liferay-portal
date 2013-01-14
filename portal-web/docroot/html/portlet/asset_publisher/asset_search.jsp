@@ -41,18 +41,21 @@ long groupId = ParamUtil.getLong(request, "groupId");
 			<%
 			if (groupId > 0) {
 				Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+				Group escapedGroup = group.toEscapedModel();
 			%>
 
-				<aui:option label="<%= group.getDescriptiveName(locale) %>" selected="true" value="<%= groupId %>" />
+				<aui:option label="<%= escapedGroup.getDescriptiveName(locale) %>" selected="true" value="<%= groupId %>" />
 
 			<%
 			}
 			else {
 				for (long curGroupId : groupIds) {
 					Group group = GroupLocalServiceUtil.getGroup(curGroupId);
+					Group escapedGroup = group.toEscapedModel();
 				%>
 
-					<aui:option label="<%= group.getDescriptiveName(locale) %>" selected="<%= displayTerms.getGroupId() == curGroupId %>" value="<%= curGroupId %>" />
+					<aui:option label="<%= escapedGroup.getDescriptiveName(locale) %>" selected="<%= displayTerms.getGroupId() == curGroupId %>" value="<%= curGroupId %>" />
 
 				<%
 				}

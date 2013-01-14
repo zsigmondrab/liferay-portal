@@ -56,14 +56,14 @@
 			className="com.liferay.portal.model.Group"
 			escapedModel="<%= true %>"
 			keyProperty="groupId"
-			modelVar="group"
+			modelVar="escapedGroup"
 			rowIdProperty="friendlyURL"
 		>
 
 			<%
-			String groupName = HtmlUtil.escape(group.getDescriptiveName(locale));
+			String groupName = escapedGroup.getDescriptiveName(locale);
 
-			if (group.isUser()) {
+			if (escapedGroup.isUser()) {
 				groupName = LanguageUtil.get(pageContext, "my-site");
 			}
 
@@ -72,7 +72,7 @@
 			sb.append("javascript:opener.");
 			sb.append(renderResponse.getNamespace());
 			sb.append("selectGroup('");
-			sb.append(group.getGroupId());
+			sb.append(escapedGroup.getGroupId());
 			sb.append("', '");
 			sb.append(UnicodeFormatter.toString(groupName));
 			sb.append("'); window.close();");
@@ -89,7 +89,7 @@
 			<liferay-ui:search-container-column-text
 				href="<%= rowHREF %>"
 				name="type"
-				value="<%= LanguageUtil.get(pageContext, group.getTypeLabel()) %>"
+				value="<%= LanguageUtil.get(pageContext, escapedGroup.getTypeLabel()) %>"
 			/>
 		</liferay-ui:search-container-row>
 

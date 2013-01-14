@@ -76,18 +76,18 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 		className="com.liferay.portal.model.Group"
 		escapedModel="<%= true %>"
 		keyProperty="groupId"
-		modelVar="group"
+		modelVar="escapedGroup"
 		rowIdProperty="friendlyURL"
 	>
 
 		<liferay-ui:search-container-column-text
 			name="name"
-			value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
+			value="<%= escapedGroup.getDescriptiveName(locale) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
 			name="type"
-			value="<%= LanguageUtil.get(pageContext, group.getTypeLabel()) %>"
+			value="<%= LanguageUtil.get(pageContext, escapedGroup.getTypeLabel()) %>"
 		/>
 	</liferay-ui:search-container-row>
 

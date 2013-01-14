@@ -22,6 +22,8 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 Group group = ActionUtil.getGroup(renderRequest);
 
+Group escapedGroup = group.toEscapedModel();
+
 long groupId = group.getGroupId();
 
 Organization organization = null;
@@ -40,8 +42,9 @@ pageContext.setAttribute("portletURL", portletURL);
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
+	escapeXml="<%= false %>"
 	localizeTitle="<%= false %>"
-	title='<%= group.getDescriptiveName(locale) + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(pageContext, "manage-memberships") %>'
+	title='<%= escapedGroup.getDescriptiveName(locale) + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(pageContext, "manage-memberships") %>'
 />
 
 <liferay-util:include page="/html/portlet/sites_admin/edit_site_assignments_toolbar.jsp">

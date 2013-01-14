@@ -30,9 +30,11 @@
 
 					<%
 					Group group = layout.getGroup();
+
+					Group escapedGroup = group.toEscapedModel();
 					%>
 
-					<img alt="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" height="<%= themeDisplay.getCompanyLogoHeight() %>" src="<%= HtmlUtil.escape(themeDisplay.getCompanyLogo()) %>" width="<%= themeDisplay.getCompanyLogoWidth() %>" />
+					<img alt="<%= escapedGroup.getDescriptiveName(locale) %>" height="<%= themeDisplay.getCompanyLogoHeight() %>" src="<%= HtmlUtil.escape(themeDisplay.getCompanyLogo()) %>" width="<%= themeDisplay.getCompanyLogoWidth() %>" />
 				</span>
 
 				<span class="site-name" title="<liferay-ui:message key="basic-configuration" />">

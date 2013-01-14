@@ -109,9 +109,11 @@ for (int i = 0; i < results.size(); i++) {
 		for (int j = 0; j < groups.size(); j++) {
 			Group group = (Group)groups.get(j);
 
+			Group escapedGroup = group.toEscapedModel();
+
 			groupIdsArray[j] = group.getGroupId();
 
-			groupNames.add(group.getDescriptiveName(locale));
+			groupNames.add(escapedGroup.getDescriptiveName(locale));
 		}
 
 		if (!groups.isEmpty()) {

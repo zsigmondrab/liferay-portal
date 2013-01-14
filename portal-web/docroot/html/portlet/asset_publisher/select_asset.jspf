@@ -118,9 +118,11 @@ portletURL.setParameter("typeSelection", typeSelection);
 
 			// Scope
 
-			Group group = GroupLocalServiceUtil.getGroup(entry.getGroupId());
+			Group scopeGroup = GroupLocalServiceUtil.getGroup(entry.getGroupId());
 
-			row.addText(group.getDescriptiveName(locale), rowHREF);
+			Group escapedScopeGroup = scopeGroup.toEscapedModel();
+
+			row.addText(escapedScopeGroup.getDescriptiveName(locale), rowHREF);
 
 			// Add result row
 

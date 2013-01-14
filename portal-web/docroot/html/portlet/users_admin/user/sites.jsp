@@ -44,12 +44,12 @@ List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 		className="com.liferay.portal.model.Group"
 		escapedModel="<%= true %>"
 		keyProperty="groupId"
-		modelVar="group"
+		modelVar="escapedGroup"
 		rowIdProperty="friendlyURL"
 	>
 		<liferay-ui:search-container-column-text
 			name="name"
-			value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
+			value="<%= escapedGroup.getDescriptiveName(locale) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
@@ -58,7 +58,7 @@ List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 		>
 
 			<%
-			List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(selUser.getUserId(), group.getGroupId());
+			List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(selUser.getUserId(), escapedGroup.getGroupId());
 
 			for (UserGroupRole userGroupRole : userGroupRoles) {
 				Role role = RoleLocalServiceUtil.getRole(userGroupRole.getRoleId());
@@ -76,7 +76,7 @@ List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 
 		<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
 			<liferay-ui:search-container-column-text>
-				<a class="modify-link" data-rowId="<%= group.getGroupId() %>" href="javascript:;"><%= removeGroupIcon %></a>
+				<a class="modify-link" data-rowId="<%= escapedGroup.getGroupId() %>" href="javascript:;"><%= removeGroupIcon %></a>
 			</liferay-ui:search-container-column-text>
 		</c:if>
 	</liferay-ui:search-container-row>

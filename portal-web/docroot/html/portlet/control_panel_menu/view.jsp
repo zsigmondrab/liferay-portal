@@ -164,8 +164,10 @@
 								for (int i = 0; i < manageableSites.size(); i++) {
 									Group group = manageableSites.get(i);
 
+									Group escapedGroup = group.toEscapedModel();
+
 									String image = "site_icon";
-									String message = group.getDescriptiveName(locale);
+									String message = escapedGroup.getDescriptiveName(locale);
 
 									if (group.isCompany()) {
 										image = "folder";
@@ -175,7 +177,7 @@
 									}
 									else if (group.isUser()) {
 										image = "user_icon";
-										message = LanguageUtil.format(pageContext, "x-personal-site", group.getDescriptiveName(locale));
+										message = LanguageUtil.format(pageContext, "x-personal-site", escapedGroup.getDescriptiveName(locale));
 									}
 
 									String url = null;
@@ -188,7 +190,7 @@
 									<liferay-ui:icon
 										image="<%= image %>"
 										localizeMessage="<%= false %>"
-										message="<%= HtmlUtil.escape(message) %>"
+										message="<%= message %>"
 										url="<%= url %>"
 									/>
 

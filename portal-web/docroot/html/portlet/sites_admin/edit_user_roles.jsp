@@ -26,6 +26,8 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 Group group = (Group)request.getAttribute(WebKeys.GROUP);
 
+Group escapedGroup = group.toEscapedModel();
+
 String groupName = group.getDescriptiveName(locale);
 
 Role role = (Role)request.getAttribute(WebKeys.ROLE);
@@ -84,8 +86,9 @@ request.setAttribute("edit_user_roles.jsp-portletURL", portletURL);
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
+	escapeXml="<%= false %>"
 	localizeTitle="<%= false %>"
-	title="<%= group.getDescriptiveName(locale) %>"
+	title="<%= escapedGroup.getDescriptiveName(locale) %>"
 />
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">

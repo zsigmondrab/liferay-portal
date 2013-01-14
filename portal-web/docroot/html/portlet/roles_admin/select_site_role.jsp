@@ -83,7 +83,7 @@ if (step == 1) {
 					className="com.liferay.portal.model.Group"
 					escapedModel="<%= true %>"
 					keyProperty="groupId"
-					modelVar="group"
+					modelVar="escapedGroup"
 					rowIdProperty="friendlyURL"
 				>
 
@@ -93,7 +93,7 @@ if (step == 1) {
 					sb.append("javascript:");
 					sb.append(renderResponse.getNamespace());
 					sb.append("selectGroup('");
-					sb.append(group.getGroupId());
+					sb.append(escapedGroup.getGroupId());
 					sb.append("');");
 
 					String rowHREF = sb.toString();
@@ -102,13 +102,13 @@ if (step == 1) {
 					<liferay-ui:search-container-column-text
 						href="<%= rowHREF %>"
 						name="name"
-						value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
+						value="<%= escapedGroup.getDescriptiveName(locale) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
 						href="<%= rowHREF %>"
 						name="type"
-						value="<%= LanguageUtil.get(pageContext, group.getTypeLabel()) %>"
+						value="<%= LanguageUtil.get(pageContext, escapedGroup.getTypeLabel()) %>"
 					/>
 				</liferay-ui:search-container-row>
 
@@ -144,10 +144,11 @@ if (step == 1) {
 
 			<%
 			Group group = GroupServiceUtil.getGroup(groupId);
+			Group escapedGroup = group.toEscapedModel();
 
 			portletURL.setParameter("step", "1");
 
-			String breadcrumbs = "<a href=\"" + portletURL.toString() + "\">" + LanguageUtil.get(pageContext, "sites") + "</a> &raquo; " + HtmlUtil.escape(group.getDescriptiveName(locale));
+			String breadcrumbs = "<a href=\"" + portletURL.toString() + "\">" + LanguageUtil.get(pageContext, "sites") + "</a> &raquo; " + escapedGroup.getDescriptiveName(locale);
 			%>
 
 			<div class="breadcrumbs">
@@ -197,6 +198,7 @@ if (step == 1) {
 
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.model.Role"
+					escapedModel="<%= true %>"
 					keyProperty="roleId"
 					modelVar="role"
 				>
@@ -204,18 +206,20 @@ if (step == 1) {
 					<liferay-util:param name="classHoverName" value="<%= RolesAdminUtil.getCssClassName(role) %>" />
 
 					<%
+					Role escapedRole = role.toEscapedModel();
+
 					StringBundler sb = new StringBundler(13);
 
 					sb.append("javascript:opener.");
 					sb.append(renderResponse.getNamespace());
 					sb.append("selectRole('");
-					sb.append(role.getRoleId());
+					sb.append(escapedRole.getRoleId());
 					sb.append("', '");
-					sb.append(UnicodeFormatter.toString(role.getTitle(locale)));
+					sb.append(UnicodeFormatter.toString(escapedRole.getTitle(locale)));
 					sb.append("', '");
 					sb.append("siteRoles");
 					sb.append("', '");
-					sb.append(UnicodeFormatter.toString(group.getDescriptiveName(locale)));
+					sb.append(UnicodeFormatter.toString(escapedGroup.getDescriptiveName(locale)));
 					sb.append("', '");
 					sb.append(group.getGroupId());
 					sb.append("'); window.close();");
@@ -226,7 +230,7 @@ if (step == 1) {
 					<liferay-ui:search-container-column-text
 						href="<%= rowHREF %>"
 						name="title"
-						value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+						value="<%= escapedRole.getTitle(locale) %>"
 					/>
 				</liferay-ui:search-container-row>
 

@@ -21,11 +21,15 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 Team team = (Team)request.getAttribute(WebKeys.TEAM);
 
+Team escapedTeam = team.toEscapedModel();
+
 long teamId = BeanParamUtil.getLong(team, request, "teamId");
 
 long groupId = BeanParamUtil.getLong(team, request, "groupId");
 
 Group group = GroupServiceUtil.getGroup(groupId);
+
+Group escapedGroup = group.toEscapedModel();
 
 Organization organization = null;
 
@@ -36,8 +40,9 @@ if (group.isOrganization()) {
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
+	escapeXml="<%= false %>"
 	localizeTitle="<%= false %>"
-	title='<%= group.getDescriptiveName(locale) + ": " + ((team == null) ? LanguageUtil.get(pageContext, "new-team") : team.getName()) %>'
+	title='<%= escapedGroup.getDescriptiveName(locale) + ": " + ((team == null) ? LanguageUtil.get(pageContext, "new-team") : escapedTeam.getName()) %>'
 />
 
 <portlet:actionURL var="editTeamURL">
