@@ -23,6 +23,7 @@ String cssClasses = ParamUtil.getString(request, "cssClasses");
 String languageId = ParamUtil.getString(request, "languageId");
 long wikiPageResourcePrimKey = ParamUtil.getLong(request, "wikiPageResourcePrimKey");
 String attachmentURLPrefix = ParamUtil.getString(request, "attachmentURLPrefix");
+String portletNamespace = ParamUtil.getString(request, "portletNamespace");
 boolean resizable = ParamUtil.getBoolean(request, "resizable");
 
 String linkButtonBar = "['Link', 'Unlink']";
@@ -47,6 +48,8 @@ CKEDITOR.config.format_tags = 'p;h1;h2;h3;h4;h5;h6;pre';
 CKEDITOR.config.height = 265;
 
 CKEDITOR.config.language = '<%= HtmlUtil.escapeJS(languageId) %>';
+
+CKEDITOR.config.portletNamespace = '<%= HtmlUtil.escapeJS(portletNamespace) %>';
 
 CKEDITOR.config.removePlugins = [
 	'elementspath',
