@@ -23,6 +23,8 @@ UnicodeProperties groupTypeSettings = (UnicodeProperties)request.getAttribute("e
 
 Group guestGroup = GroupLocalServiceUtil.getGroup(company.getCompanyId(), GroupConstants.GUEST);
 
+Group escapedGuestGroup = guestGroup.toEscapedModel();
+
 boolean mergeGuestPublicPages = PropertiesParamUtil.getBoolean(groupTypeSettings, request, "mergeGuestPublicPages");
 %>
 
@@ -35,8 +37,8 @@ boolean mergeGuestPublicPages = PropertiesParamUtil.getBoolean(groupTypeSettings
 		<c:when test="<%= !privateLayout && (liveGroup.getGroupId() != guestGroup.getGroupId()) %>">
 
 			<%
-			String taglibLabel = LanguageUtil.format(pageContext, "merge-x-public-pages", guestGroup.getDescriptiveName(locale));
-			String taglibHelpMessage = LanguageUtil.format(pageContext, "you-can-configure-the-top-level-pages-of-this-public-site-to-merge-with-the-top-level-pages-of-the-public-x-site", guestGroup.getDescriptiveName(locale));
+			String taglibLabel = LanguageUtil.format(pageContext, "merge-x-public-pages", escapedGuestGroup.getDescriptiveName(locale));
+			String taglibHelpMessage = LanguageUtil.format(pageContext, "you-can-configure-the-top-level-pages-of-this-public-site-to-merge-with-the-top-level-pages-of-the-public-x-site", escapedGuestGroup.getDescriptiveName(locale));
 			%>
 
 			<aui:input helpMessage="<%= taglibHelpMessage %>" label="<%= taglibLabel %>" name="mergeGuestPublicPages" type="checkbox" value="<%= mergeGuestPublicPages %>" />

@@ -112,31 +112,31 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 			className="com.liferay.portal.model.Group"
 			escapedModel="<%= true %>"
 			keyProperty="groupId"
-			modelVar="group"
+			modelVar="escapedGroup"
 			rowIdProperty="friendlyURL"
 		>
 
 			<%
 			PortletURL rowURL = null;
 
-			if (group.getPublicLayoutsPageCount() > 0) {
+			if (escapedGroup.getPublicLayoutsPageCount() > 0) {
 				rowURL = renderResponse.createActionURL();
 
 				rowURL.setWindowState(WindowState.NORMAL);
 
 				rowURL.setParameter("struts_action", "/sites_admin/page");
 				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("groupId", String.valueOf(group.getGroupId()));
+				rowURL.setParameter("groupId", String.valueOf(escapedGroup.getGroupId()));
 				rowURL.setParameter("privateLayout", Boolean.FALSE.toString());
 			}
-			else if (tabs1.equals("my-sites") && (group.getPrivateLayoutsPageCount() > 0)) {
+			else if (tabs1.equals("my-sites") && (escapedGroup.getPrivateLayoutsPageCount() > 0)) {
 				rowURL = renderResponse.createActionURL();
 
 				rowURL.setWindowState(WindowState.NORMAL);
 
 				rowURL.setParameter("struts_action", "/sites_admin/page");
 				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("groupId", String.valueOf(group.getGroupId()));
+				rowURL.setParameter("groupId", String.valueOf(escapedGroup.getGroupId()));
 				rowURL.setParameter("privateLayout", Boolean.TRUE.toString());
 			}
 			%>
@@ -152,18 +152,18 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 				buffer.append("<a href=\"");
 				buffer.append(rowURL.toString());
 				buffer.append("\" target=\"_blank\"><strong>");
-				buffer.append(HtmlUtil.escape(group.getDescriptiveName(locale)));
+				buffer.append(escapedGroup.getDescriptiveName(locale));
 				buffer.append("</strong></a>");
 			}
 			else {
 				buffer.append("<strong>");
-				buffer.append(HtmlUtil.escape(group.getDescriptiveName(locale)));
+				buffer.append(escapedGroup.getDescriptiveName(locale));
 				buffer.append("</strong>");
 			}
 
-			if (!tabs1.equals("my-sites") && Validator.isNotNull(group.getDescription())) {
+			if (!tabs1.equals("my-sites") && Validator.isNotNull(escapedGroup.getDescription())) {
 				buffer.append("<br /><em>");
-				buffer.append(group.getDescription());
+				buffer.append(escapedGroup.getDescription());
 				buffer.append("</em>");
 			}
 			%>
@@ -174,7 +174,7 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 			LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 			userParams.put("inherit", true);
-			userParams.put("usersGroups", new Long(group.getGroupId()));
+			userParams.put("usersGroups", new Long(escapedGroup.getGroupId()));
 			%>
 
 			<liferay-ui:search-container-column-text
@@ -185,7 +185,7 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 			<c:if test='<%= tabs1.equals("my-sites") && PropsValues.LIVE_USERS_ENABLED %>'>
 				<liferay-ui:search-container-column-text
 					name="online-now"
-					value="<%= String.valueOf(LiveUsers.getGroupUsersCount(company.getCompanyId(), group.getGroupId())) %>"
+					value="<%= String.valueOf(LiveUsers.getGroupUsersCount(company.getCompanyId(), escapedGroup.getGroupId())) %>"
 				/>
 			</c:if>
 
@@ -194,7 +194,7 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 			>
 				<liferay-ui:asset-tags-summary
 					className="<%= Group.class.getName() %>"
-					classPK="<%= group.getGroupId() %>"
+					classPK="<%= escapedGroup.getGroupId() %>"
 				/>
 			</liferay-ui:search-container-column-text>
 

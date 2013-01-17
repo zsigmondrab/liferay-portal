@@ -29,6 +29,7 @@ boolean schedule = ParamUtil.getBoolean(request, "schedule");
 Group selGroup = (Group)request.getAttribute(WebKeys.GROUP);
 
 Group liveGroup = null;
+Group escapedLiveGroup = null;
 Group stagingGroup = null;
 
 int pagesCount = 0;
@@ -58,6 +59,7 @@ long liveGroupId = 0;
 
 if (liveGroup != null) {
 	liveGroupId = liveGroup.getGroupId();
+	escapedLiveGroup = liveGroup.toEscapedModel();
 }
 
 long stagingGroupId = 0;
@@ -154,7 +156,7 @@ else if (liveGroup.isUser()) {
 	user2 = UserLocalServiceUtil.getUserById(liveGroup.getClassPK());
 }
 
-String rootNodeName = liveGroup.getDescriptiveName(locale);
+String rootNodeName = escapedLiveGroup.getDescriptiveName(locale);
 
 if (liveGroup.isOrganization()) {
 	rootNodeName = organization.getName();

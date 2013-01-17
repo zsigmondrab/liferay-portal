@@ -34,6 +34,8 @@ boolean showEmptyOption = GetterUtil.getBoolean((String)request.getAttribute("li
 long ddmTemplateGroupId = PortletDisplayTemplateUtil.getDDMTemplateGroupId(themeDisplay);
 
 Group ddmTemplateGroup = GroupServiceUtil.getGroup(ddmTemplateGroupId);
+
+Group escapedDDMTemplateGroup = ddmTemplateGroup.toEscapedModel();
 %>
 
 <aui:select id="displayStyle" label="<%= label %>" name='<%= "preferences--" + preferenceName + "--" %>'>
@@ -95,7 +97,7 @@ Group ddmTemplateGroup = GroupServiceUtil.getGroup(ddmTemplateGroupId);
 	%>
 
 	<c:if test="<%= (groupPortletDDMTemplates != null) && !groupPortletDDMTemplates.isEmpty() %>">
-		<optgroup label="<%= ddmTemplateGroup.getDescriptiveName(locale) %>">
+		<optgroup label="<%= escapedDDMTemplateGroup.getDescriptiveName(locale) %>">
 
 		<%
 		for (DDMTemplate groupPortletDDMTemplate : groupPortletDDMTemplates) {
@@ -119,7 +121,7 @@ Group ddmTemplateGroup = GroupServiceUtil.getGroup(ddmTemplateGroupId);
 	id="selectDDMTemplate"
 	image="<%= icon %>"
 	label="<%= true %>"
-	message='<%= LanguageUtil.format(pageContext, "manage-display-templates-for-x", ddmTemplateGroup.getDescriptiveName(locale), false) %>'
+	message='<%= LanguageUtil.format(pageContext, "manage-display-templates-for-x", escapedDDMTemplateGroup.getDescriptiveName(locale), false) %>'
 	url="javascript:;"
 />
 

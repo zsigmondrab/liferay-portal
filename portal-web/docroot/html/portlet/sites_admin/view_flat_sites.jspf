@@ -67,18 +67,18 @@
 		className="com.liferay.portal.model.Group"
 		escapedModel="<%= true %>"
 		keyProperty="groupId"
-		modelVar="curGroup"
+		modelVar="escapedCurGroup"
 		rowIdProperty="friendlyURL"
 		rowVar="row"
 	>
 		<liferay-portlet:renderURL varImpl="rowURL">
 			<portlet:param name="struts_action" value="/sites_admin/view" />
-			<portlet:param name="groupId" value="<%= String.valueOf(curGroup.getGroupId()) %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(escapedCurGroup.getGroupId()) %>" />
 			<portlet:param name="sitesListView" value="<%= SiteConstants.LIST_VIEW_TREE %>" />
 		</liferay-portlet:renderURL>
 
 		<%
-		if (!GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.UPDATE)) {
+		if (!GroupPermissionUtil.contains(permissionChecker, escapedCurGroup, ActionKeys.UPDATE)) {
 			rowURL = null;
 		}
 		%>

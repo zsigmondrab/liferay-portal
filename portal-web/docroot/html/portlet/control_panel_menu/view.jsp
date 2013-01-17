@@ -118,10 +118,10 @@
 				String curGroupName = null;
 
 				if (curGroup.isUser() && (curGroup.getClassPK() == user.getUserId())) {
-					curGroupName = LanguageUtil.format(pageContext, "x-personal-site", curLiveGroup.getDescriptiveName(locale));
+					curGroupName = LanguageUtil.format(pageContext, "x-personal-site", HtmlUtil.escape(curLiveGroup.getDescriptiveName(locale)));
 				}
 				else {
-					curGroupName = curLiveGroup.getDescriptiveName(locale);
+					curGroupName = HtmlUtil.escape(curLiveGroup.getDescriptiveName(locale));
 				}
 
 				if (category.equals(PortletCategoryKeys.CONTENT)) {
@@ -149,10 +149,12 @@
 								for (int i = 0; i < manageableSites.size(); i++) {
 									Group group = manageableSites.get(i);
 
-									String message = group.getDescriptiveName(locale);
+									Group escapedGroup = group.toEscapedModel();
+
+									String message = escapedGroup.getDescriptiveName(locale);
 
 									if (group.isUser()) {
-										message = LanguageUtil.format(pageContext, "x-personal-site", group.getDescriptiveName(locale));
+										message = LanguageUtil.format(pageContext, "x-personal-site", escapedGroup.getDescriptiveName(locale));
 									}
 
 									String url = null;
@@ -164,7 +166,7 @@
 
 									<liferay-ui:icon
 										localizeMessage="<%= false %>"
-										message="<%= HtmlUtil.escape(message) %>"
+										message="<%= message %>"
 										src="<%= group.getIconURL(themeDisplay) %>"
 										url="<%= url %>"
 									/>

@@ -37,6 +37,7 @@ if (selPlid > 0) {
 }
 
 Group group = null;
+Group escapedLiveGroup = null;
 Group liveGroup = null;
 Group stagingGroup = null;
 
@@ -65,6 +66,10 @@ if (group != null) {
 			liveGroup = group;
 			stagingGroup = group.getStagingGroup();
 		}
+	}
+
+	if (liveGroup != null) {
+		escapedLiveGroup = liveGroup.toEscapedModel();
 	}
 }
 
