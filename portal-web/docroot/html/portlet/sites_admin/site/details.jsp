@@ -100,7 +100,7 @@ if (showPrototypes && (group != null)) {
 		</c:when>
 		<c:when test="<%= (liveGroup != null) && liveGroup.isOrganization() %>">
 			<aui:field-wrapper helpMessage="the-name-of-this-site-cannot-be-edited-because-it-belongs-to-an-organization" label="name">
-				<%= liveGroup.getDescriptiveName(locale) %>
+				<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>
 			</aui:field-wrapper>
 		</c:when>
 		<c:otherwise>
@@ -402,28 +402,28 @@ if (parentGroup != null) {
 		className="com.liferay.portal.model.Group"
 		escapedModel="<%= true %>"
 		keyProperty="groupId"
-		modelVar="curGroup"
+		modelVar="escapedCurGroup"
 	>
 		<portlet:renderURL var="rowURL">
 			<portlet:param name="struts_action" value="/sites_admin/edit_group" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(curGroup.getGroupId()) %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(escapedCurGroup.getGroupId()) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="name"
-			value="<%= curGroup.getDescriptiveName(locale) %>"
+			value="<%= escapedCurGroup.getDescriptiveName(locale) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="type"
-			value="<%= LanguageUtil.get(pageContext, curGroup.getTypeLabel()) %>"
+			value="<%= LanguageUtil.get(pageContext, escapedCurGroup.getTypeLabel()) %>"
 		/>
 
 		<liferay-ui:search-container-column-text>
-			<a class="modify-link" data-rowId="<%= curGroup.getGroupId() %>" href="javascript:;"><%= removeGroupIcon %></a>
+			<a class="modify-link" data-rowId="<%= escapedCurGroup.getGroupId() %>" href="javascript:;"><%= removeGroupIcon %></a>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 

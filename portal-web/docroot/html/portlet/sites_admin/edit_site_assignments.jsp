@@ -66,8 +66,9 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 	<c:when test="<%= selUser == null %>">
 		<liferay-ui:header
 			backURL="<%= redirect %>"
+			escapeXml="<%= false %>"
 			localizeTitle="<%= false %>"
-			title='<%= group.getDescriptiveName(locale) %>'
+			title='<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>'
 		/>
 
 		<liferay-util:include page="/html/portlet/sites_admin/edit_site_assignments_toolbar.jsp">

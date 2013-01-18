@@ -114,10 +114,6 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 					modelVar="group"
 				>
 
-					<%
-					group = group.toEscapedModel();
-					%>
-
 					<liferay-ui:search-container-column-text
 						name="name"
 					>
