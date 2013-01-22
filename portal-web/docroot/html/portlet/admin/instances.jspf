@@ -51,6 +51,8 @@ List resultRows = searchContainer.getResultRows();
 for (int i = 0; i < results.size(); i++) {
 	Company company2 = (Company)results.get(i);
 
+	Company escapedCompany2 = company2.toEscapedModel();
+
 	ResultRow row = new ResultRow(company2, company2.getCompanyId(), i);
 
 	PortletURL rowURL = renderResponse.createRenderURL();
@@ -65,7 +67,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Web ID
 
-	row.addText(company2.getWebId(), rowURL);
+	row.addText(escapedCompany2.getWebId(), rowURL);
 
 	// Virtual Host
 

@@ -21,6 +21,12 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 Company company2 = (Company)request.getAttribute(WebKeys.SEL_COMPANY);
 
+Company escapedCompany2 = null;
+
+if (company2 != null) {
+	escapedCompany2 = company2.toEscapedModel();
+}
+
 long companyId = BeanParamUtil.getLong(company2, request, "companyId");
 
 VirtualHost virtualHost = null;
@@ -34,8 +40,9 @@ catch (Exception e) {
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
+	escapeXml="<%= false %>"
 	localizeTitle="<%= (company2 == null) %>"
-	title='<%= (company2 == null) ? "new-portal-instance" : company2.getName() %>'
+	title='<%= (escapedCompany2 == null) ? "new-portal-instance" : escapedCompany2.getName() %>'
 />
 
 <portlet:actionURL var="editInstanceURL">
@@ -60,7 +67,7 @@ catch (Exception e) {
 			</aui:field-wrapper>
 
 			<aui:field-wrapper label="web-id">
-				<%= company2.getWebId() %>
+				<%= escapedCompany2.getWebId() %>
 			</aui:field-wrapper>
 		</c:if>
 
