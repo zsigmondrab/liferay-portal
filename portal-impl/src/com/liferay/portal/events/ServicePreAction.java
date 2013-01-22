@@ -224,11 +224,11 @@ public class ServicePreAction extends Action {
 					locale = user.getLocale();
 				}
 			}
-
-			session.setAttribute(Globals.LOCALE_KEY, locale);
-
-			LanguageUtil.updateCookie(request, response, locale);
 		}
+
+		session.setAttribute(Globals.LOCALE_KEY, locale);
+
+		LanguageUtil.updateCookie(request, response, locale);
 
 		return locale;
 	}
