@@ -122,7 +122,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 									%>
 
 								<div class="<%= cssClass %> theme-entry">
-									<img alt="" class="modify-link theme-thumbnail" onclick="document.getElementById('<portlet:namespace /><%= device %>ColorSchemeId<%= i %>').checked = true;" src="<%= themeDisplay.getCDNBaseURL() %><%= selTheme.getStaticResourcePath() %><%= curColorScheme.getColorSchemeThumbnailPath() %>/thumbnail.png" title="<%= curColorScheme.getName() %>" />
+									<img alt="" class="modify-link theme-thumbnail" onclick="<portlet:namespace />selectColorScheme('#<portlet:namespace /><%= device %>ColorSchemeId<%= i %>');" src="<%= themeDisplay.getCDNBaseURL() %><%= selTheme.getStaticResourcePath() %><%= curColorScheme.getColorSchemeThumbnailPath() %>/thumbnail.png" title="<%= curColorScheme.getName() %>" />
 
 										<aui:input checked="<%= selColorScheme.getColorSchemeId().equals(curColorScheme.getColorSchemeId()) %>" cssClass="theme-title" id='<%= device + "ColorSchemeId" + i %>' label="<%= curColorScheme.getName() %>" name='<%= device + "ColorSchemeId" %>' type="radio" value="<%= curColorScheme.getColorSchemeId() %>" />
 									</div>
@@ -243,6 +243,56 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 		</div>
 	</c:if>
 </div>
+
+<aui:script use="aui-base">
+	Liferay.provide(
+		window,
+		'<portlet:namespace />selectColorScheme',
+		function (id) {
+			var colorSchemeInput = A.one(id);
+
+			if (!colorSchemeInput.get('disabled')) {
+				colorSchemeInput.set('checked', true);
+			}
+		}
+	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace /><%= device %>disableColorSchemeSelection',
+		function (enable) {
+			A.all('input[name=<portlet:namespace /><%= device %>ColorSchemeId]').set('disabled', enable);
+		}
+	);
+	A.all('.lfr-available-themes input[name=<portlet:namespace /><%= device %>ThemeId]').on(
+		'change',
+		function () {
+			<portlet:namespace /><%= device %>disableColorSchemeSelection(true);
+		}
+	);
+
+	A.all('.lfr-available-themes .theme-thumbnail').on(
+		'click',
+		function() {
+			<portlet:namespace /><%= device %>disableColorSchemeSelection(true);
+		}
+	);
+
+	A.one('#<portlet:namespace /><%= device %>SelTheme').on(
+		'change',
+		function () {
+			<portlet:namespace /><%= device %>disableColorSchemeSelection(false);
+		}
+	);
+
+	A.one('.theme-screenshot').on(
+		'click',
+		function() {
+			<portlet:namespace /><%= device %>disableColorSchemeSelection(false);
+		}
+	);
+
+</aui:script>
 
 <c:if test="<%= editable && permissionChecker.isOmniadmin() && PrefsPropsUtil.getBoolean(PropsKeys.AUTO_DEPLOY_ENABLED, PropsValues.AUTO_DEPLOY_ENABLED) %>">
 	<aui:script use="aui-base">
