@@ -34,8 +34,19 @@ import java.util.Properties;
  */
 public class ColorSchemeImpl implements ColorScheme {
 
+	public static ColorScheme getDefaultRegularColorScheme() {
+		return new ColorSchemeImpl(
+			getDefaultRegularColorSchemeId(), StringPool.BLANK,
+			StringPool.BLANK);
+	}
+
 	public static String getDefaultRegularColorSchemeId() {
 		return PropsValues.DEFAULT_REGULAR_COLOR_SCHEME_ID;
+	}
+
+	public static ColorScheme getDefaultWapColorScheme() {
+		return new ColorSchemeImpl(
+			getDefaultWapColorSchemeId(), StringPool.BLANK, StringPool.BLANK);
 	}
 
 	public static String getDefaultWapColorSchemeId() {
@@ -43,9 +54,7 @@ public class ColorSchemeImpl implements ColorScheme {
 	}
 
 	public static ColorScheme getNullColorScheme() {
-		return new ColorSchemeImpl(
-			getDefaultRegularColorSchemeId(), StringPool.BLANK,
-			StringPool.BLANK);
+		return getDefaultRegularColorScheme();
 	}
 
 	public ColorSchemeImpl() {

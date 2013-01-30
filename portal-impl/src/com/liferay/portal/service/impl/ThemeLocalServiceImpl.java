@@ -121,11 +121,10 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
 		if (colorScheme == null) {
 			if (wapTheme) {
-				colorSchemeId = ColorSchemeImpl.getDefaultWapColorSchemeId();
+				colorScheme = ColorSchemeImpl.getDefaultWapColorScheme();
 			}
 			else {
-				colorSchemeId =
-					ColorSchemeImpl.getDefaultRegularColorSchemeId();
+				colorScheme = ColorSchemeImpl.getDefaultRegularColorScheme();
 			}
 		}
 
