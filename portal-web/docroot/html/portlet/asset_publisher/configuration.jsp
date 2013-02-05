@@ -124,10 +124,6 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 					modelVar="group"
 				>
 
-					<%
-					group = group.toEscapedModel();
-					%>
-
 					<liferay-ui:search-container-column-text
 						name="name"
 					>
