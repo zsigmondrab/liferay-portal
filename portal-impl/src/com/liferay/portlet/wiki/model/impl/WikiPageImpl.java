@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
@@ -78,6 +79,11 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
+
+		long[] assetCategoryIds = AssetCategoryLocalServiceUtil.getCategoryIds(
+			WikiPage.class.getName(), getResourcePrimKey());
+
+		serviceContext.setAssetCategoryIds(assetCategoryIds);
 
 		long repositoryId = PortletFileRepositoryUtil.getPortletRepositoryId(
 			getGroupId(), PortletKeys.WIKI, serviceContext);

@@ -1104,6 +1104,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
 
+		populateServiceContext(serviceContext, page);
+
 		addPage(
 			userId, nodeId, title, version, content, summary, false, format,
 			head, parentTitle, redirectTitle, serviceContext);
@@ -1121,7 +1123,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Asset
 
-		updateAsset(userId, page, null, null, null);
+		updateAsset(
+			userId, page, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
 
 		// Indexer
 
@@ -1325,11 +1330,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WikiPage oldPage = getPage(nodeId, title, version);
 
-		long[] assetCategoryIds = assetCategoryLocalService.getCategoryIds(
-			WikiPage.class.getName(), oldPage.getResourcePrimKey());
-
-		serviceContext.setAssetCategoryIds(assetCategoryIds);
-
 		AssetEntry assetEntry = assetEntryLocalService.getEntry(
 			WikiPage.class.getName(), oldPage.getResourcePrimKey());
 
@@ -1341,10 +1341,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
 
-		String[] assetTagNames = assetTagLocalService.getTagNames(
-			WikiPage.class.getName(), oldPage.getResourcePrimKey());
-
-		serviceContext.setAssetTagNames(assetTagNames);
+		populateServiceContext(serviceContext, oldPage);
 
 		return updatePage(
 			userId, nodeId, title, 0, oldPage.getContent(),
@@ -2027,6 +2024,22 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			WikiPage.class.getName(), page.getResourcePrimKey());
 
 		subscriptionSender.flushNotificationsAsync();
+	}
+
+	protected void populateServiceContext(
+			ServiceContext serviceContext, WikiPage page)
+		throws PortalException, SystemException {
+
+		long[] assetCategoryIds = assetCategoryLocalService.getCategoryIds(
+			WikiPage.class.getName(), page.getResourcePrimKey());
+
+		serviceContext.setAssetCategoryIds(assetCategoryIds);
+
+		String[] assetTagNames = assetTagLocalService.getTagNames(
+			WikiPage.class.getName(), page.getResourcePrimKey());
+
+		serviceContext.setAssetTagNames(assetTagNames);
+
 	}
 
 	protected String replaceStyles(String html) {
