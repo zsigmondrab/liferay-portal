@@ -446,6 +446,12 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 		_assetTagLocalService.deleteTag(tagId);
 	}
 
+	public void deleteGroupTags(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_assetTagLocalService.deleteGroupTags(groupId);
+	}
+
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getEntryTags(
 		long entryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
