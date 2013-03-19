@@ -192,6 +192,16 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		return tag;
 	}
 
+	public void deleteGroupTags(long groupId)
+		throws PortalException, SystemException {
+
+		List<AssetTag> groupTags = getGroupTags(groupId);
+
+		for (AssetTag tag : groupTags) {
+			deleteTag(tag);
+		}
+	}
+
 	public void deleteTag(AssetTag tag)
 		throws PortalException, SystemException {
 
