@@ -687,6 +687,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				Group.class.getName(), group.getGroupId());
 		}
 
+		assetTagLocalService.deleteGroupTags(group.getGroupId());
+
 		assetVocabularyLocalService.deleteVocabularies(group.getGroupId());
 
 		// Shopping
