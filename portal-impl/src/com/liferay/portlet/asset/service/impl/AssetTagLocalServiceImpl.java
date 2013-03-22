@@ -37,6 +37,7 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.AssetTagProperty;
 import com.liferay.portlet.asset.service.base.AssetTagLocalServiceBaseImpl;
+import com.liferay.portlet.asset.service.persistence.AssetEntryUtil;
 import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.social.util.SocialCounterPeriodUtil;
 
@@ -225,7 +226,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	public List<AssetTag> getEntryTags(long entryId) throws SystemException {
-		return assetTagFinder.findByEntryId(entryId);
+		return assetEntryPersistence.getAssetTags(entryId);
 	}
 
 	public List<AssetTag> getGroupsTags(long[] groupIds)
@@ -363,7 +364,9 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	public List<AssetTag> getTags(long classNameId, long classPK)
 		throws SystemException {
 
-		return assetTagFinder.findByC_C(classNameId, classPK);
+		AssetEntry entry = AssetEntryUtil.fetchByC_C(classNameId, classPK);
+
+		return assetEntryPersistence.getAssetTags(entry.getEntryId());
 	}
 
 	public List<AssetTag> getTags(long groupId, long classNameId, String name)
