@@ -52,7 +52,7 @@ import com.liferay.portlet.journal.util.JournalUtil;
 
 import java.io.File;
 import java.io.IOException;
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -372,9 +372,35 @@ public class JournalTemplateLocalServiceImpl
 
 	public List<JournalTemplate> getStructureTemplates(
 			long groupId, String structureId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
-		return journalTemplatePersistence.findByG_S(groupId, structureId);
+		return getStructureTemplates(groupId, structureId, false);
+	}
+
+	public List<JournalTemplate> getStructureTemplates(
+			long groupId, String structureId, boolean includeGlobalTemplates)
+		throws PortalException, SystemException {
+
+		if (!includeGlobalTemplates) {
+			return journalTemplatePersistence.findByG_S(groupId, structureId);
+		}
+
+		List<JournalTemplate> structureTemplates =
+			new ArrayList<JournalTemplate>();
+
+		structureTemplates.addAll(
+			journalTemplatePersistence.findByG_S(groupId, structureId));
+
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		Group companyGroup = groupLocalService.getCompanyGroup(
+			group.getCompanyId());
+
+		structureTemplates.addAll(
+			journalTemplatePersistence.findByG_S(
+				companyGroup.getGroupId(), structureId));
+
+		return structureTemplates;
 	}
 
 	public List<JournalTemplate> getStructureTemplates(

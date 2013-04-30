@@ -360,8 +360,19 @@ public class JournalTemplateLocalServiceUtil {
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalTemplate> getStructureTemplates(
 		long groupId, java.lang.String structureId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getStructureTemplates(groupId, structureId);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalTemplate> getStructureTemplates(
+		long groupId, java.lang.String structureId,
+		boolean includeGlobalTemplates)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getStructureTemplates(groupId, structureId,
+			includeGlobalTemplates);
 	}
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalTemplate> getStructureTemplates(
