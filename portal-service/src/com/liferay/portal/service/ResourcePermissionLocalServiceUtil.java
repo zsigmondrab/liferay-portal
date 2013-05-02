@@ -928,6 +928,17 @@ public class ResourcePermissionLocalServiceUtil {
 			roleIdsToActionIds);
 	}
 
+	public static void setResourcePermissions(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey,
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds,
+		boolean skipPermissionCheck)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.setResourcePermissions(companyId, name, scope, primKey,
+			roleIdsToActionIds, skipPermissionCheck);
+	}
+
 	public static ResourcePermissionLocalService getService() {
 		if (_service == null) {
 			_service = (ResourcePermissionLocalService)PortalBeanLocatorUtil.locate(ResourcePermissionLocalService.class.getName());
