@@ -87,6 +87,10 @@ if (showPrototypes && (group != null)) {
 	<c:if test="<%= gpe.getType() == GroupParentException.SELF_DESCENDANT %>">
 		<liferay-ui:message key="the-site-cannot-be-its-own-parent-site" />
 	</c:if>
+
+	<c:if test="<%= gpe.getType() == GroupParentException.MISSING_PARENT %>">
+		<liferay-ui:message key="the-site-needs-parent-site-because-of-the-membership-type" />
+	</c:if>
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= RequiredGroupException.class %>">
