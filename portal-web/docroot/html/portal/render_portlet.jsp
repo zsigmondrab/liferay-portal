@@ -46,8 +46,6 @@ boolean modeHelp = layoutTypePortlet.hasModeHelpPortletId(portletId);
 boolean modePreview = layoutTypePortlet.hasModePreviewPortletId(portletId);
 boolean modePrint = layoutTypePortlet.hasModePrintPortletId(portletId);
 
-PortletPreferences portletSetup = PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(layout, portletId);
-
 PortletPreferencesIds portletPreferencesIds = PortletPreferencesFactoryUtil.getPortletPreferencesIds(request, portletId);
 
 PortletPreferences portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(portletPreferencesIds);
@@ -249,12 +247,6 @@ if (portlet.hasPortletMode(responseContentType, PortletMode.HELP)) {
 	}
 }
 
-boolean supportsMimeType = portlet.hasPortletMode(responseContentType, portletMode);
-
-if (responseContentType.equals(ContentTypes.XHTML_MP) && portlet.hasMultipleMimeTypes()) {
-	supportsMimeType = GetterUtil.getBoolean(portletSetup.getValue("portletSetupSupportedClientsMobileDevices_" + portletMode, String.valueOf(supportsMimeType)));
-}
-
 // Only authenticated with the correct permissions can update a layout. If
 // staging is activated, only staging layouts can be updated.
 
@@ -371,14 +363,7 @@ portletDisplay.setStateMax(stateMax);
 portletDisplay.setStateMin(stateMin);
 portletDisplay.setStateNormal(windowState.equals(WindowState.NORMAL));
 portletDisplay.setStatePopUp(themeDisplay.isStatePopUp());
-portletDisplay.setPortletSetup(portletSetup);
 portletDisplay.setWebDAVEnabled(portlet.getWebDAVStorageInstance() != null);
-
-// Portlet custom CSS class name
-
-String customCSSClassName = PortletConfigurationUtil.getPortletCustomCSSClassName(portletSetup);
-
-portletDisplay.setCustomCSSClassName(customCSSClassName);
 
 // Portlet icon
 
@@ -688,6 +673,22 @@ if (group.isControlPanel()) {
 		portletDisplay.setShowConfigurationIcon(true);
 	}
 }
+
+PortletPreferences portletSetup = PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(layout, portletId);
+
+portletDisplay.setPortletSetup(portletSetup);
+
+boolean supportsMimeType = portlet.hasPortletMode(responseContentType, portletMode);
+
+if (responseContentType.equals(ContentTypes.XHTML_MP) && portlet.hasMultipleMimeTypes()) {
+	supportsMimeType = GetterUtil.getBoolean(portletSetup.getValue("portletSetupSupportedClientsMobileDevices_" + portletMode, String.valueOf(supportsMimeType)));
+}
+
+//Portlet custom CSS class name
+
+String customCSSClassName = PortletConfigurationUtil.getPortletCustomCSSClassName(portletSetup);
+
+portletDisplay.setCustomCSSClassName(customCSSClassName);
 
 // Portlet decorate
 
