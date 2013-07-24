@@ -140,7 +140,7 @@ int sortColumnIndex = -1;
 					}
 				%>
 
-					<th class="<%= cssClass %>" id="<%= namespace + id %>_col-<%= normalizedHeaderName %>"
+					<th class="<%= cssClass %> col-<%= normalizedHeaderName %>" id="<%= namespace + id %>_col-<%= normalizedHeaderName %>"
 
 						<%--
 
@@ -299,7 +299,7 @@ int sortColumnIndex = -1;
 				}
 			%>
 
-				<td class="table-cell <%= columnClassName %>">
+				<td class="table-cell col-<%= normalizedHeaderName %> <%= columnClassName %>">
 
 					<%
 					entry.print(pageContext);
