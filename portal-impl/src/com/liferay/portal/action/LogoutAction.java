@@ -53,7 +53,11 @@ public class LogoutAction extends Action {
 				PropsKeys.LOGOUT_EVENTS_PRE, PropsValues.LOGOUT_EVENTS_PRE,
 				request, response);
 
-			String domain = CookieKeys.getDomain(request);
+			String domain = StringPool.BLANK;
+
+			if (!PropsValues.SESSION_COOKIE_USE_FULL_HOSTNAME) {
+				domain = CookieKeys.getDomain(request);
+			}
 
 			Cookie companyIdCookie = new Cookie(
 				CookieKeys.COMPANY_ID, StringPool.BLANK);

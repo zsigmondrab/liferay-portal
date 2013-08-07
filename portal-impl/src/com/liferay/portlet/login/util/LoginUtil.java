@@ -304,7 +304,11 @@ public class LoginUtil {
 
 		// Set cookies
 
-		String domain = CookieKeys.getDomain(request);
+		String domain = StringPool.BLANK;
+
+		if (!PropsValues.SESSION_COOKIE_USE_FULL_HOSTNAME) {
+			domain = CookieKeys.getDomain(request);
+		}
 
 		User user = UserLocalServiceUtil.getUserById(userId);
 
