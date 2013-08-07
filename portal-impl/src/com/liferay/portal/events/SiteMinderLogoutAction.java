@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.AuthSettingsUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +42,11 @@ public class SiteMinderLogoutAction extends Action {
 				return;
 			}
 
-			String domain = CookieKeys.getDomain(request);
+			String domain = StringPool.BLANK;
+
+			if (!PropsValues.SESSION_COOKIE_USE_FULL_HOSTNAME) {
+				domain = CookieKeys.getDomain(request);
+			}
 
 			Cookie smSessionCookie = new Cookie(_SMSESSION, StringPool.BLANK);
 
