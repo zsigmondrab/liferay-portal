@@ -68,6 +68,12 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 
 			orderableHeaders.put("version", "version");
 
+			if (article.getClassNameId() > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
+				headerNames.remove("display-date");
+
+				orderableHeaders.remove("display-date");
+			}
+
 			if (Validator.isNull(orderByCol)) {
 				searchContainer.setOrderByCol("version");
 			}
@@ -134,7 +140,9 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 
 				// Display date
 
-				row.addDate(articleVersion.getDisplayDate(), rowURL);
+				if (articleVersion.getClassNameId() == JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
+					row.addDate(articleVersion.getDisplayDate(), rowURL);
+				}
 
 				// Author
 
