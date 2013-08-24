@@ -911,11 +911,25 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					importedFileEntryId);
 			}
 			catch (NoSuchFileEntryException nsfee) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to reference " + path);
-				}
+				try {
+					Map<Long, Long> map =
+						(Map<Long, Long>)portletDataContext.
+							getNewPrimaryKeysMap(DLFileEntry.class);
 
-				continue;
+					FileEntry origFileEntry =
+						(FileEntry)portletDataContext.getZipEntryAsObject(
+							referenceDataElement, path);
+
+					fileEntry = DLAppLocalServiceUtil.getFileEntry(
+						map.get(origFileEntry.getFileEntryId()));
+				}
+				catch (NoSuchFileEntryException nsfee2) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Unable to reference " + path);
+					}
+
+					continue;
+				}
 			}
 
 			String url = DLUtil.getPreviewURL(
