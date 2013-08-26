@@ -356,9 +356,15 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		long companyId, long groupId, long fileEntryId, long fileVersionId) {
 
 		try {
-			DLStoreUtil.deleteDirectory(
-				companyId, REPOSITORY_ID,
-				getPathSegment(groupId, fileEntryId, fileVersionId, true));
+			String dirName = getPathSegment(
+				groupId, fileEntryId, fileVersionId, true);
+
+			if (fileVersionId > 0) {
+				dirName = dirName.concat(StringPool.PERIOD);
+				dirName = dirName.concat(getPreviewType());
+			}
+
+			DLStoreUtil.deleteDirectory(companyId, REPOSITORY_ID, dirName);
 		}
 		catch (Exception e) {
 		}
@@ -526,6 +532,12 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			return;
 		}
 
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		if (!hasPreview(fileVersion, previewType)) {
+			return;
+		}
+
 		String binPathSegment = null;
 
 		if (fileIndex < 0) {
@@ -548,8 +560,6 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		String binPathName = sb.toString();
 
 		fileEntryElement.addAttribute(binPathName, binPath);
-
-		FileVersion fileVersion = fileEntry.getFileVersion();
 
 		InputStream is = null;
 
