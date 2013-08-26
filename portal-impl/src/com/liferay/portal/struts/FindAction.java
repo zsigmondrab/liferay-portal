@@ -22,17 +22,21 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.sites.util.SitesUtil;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
@@ -77,6 +81,8 @@ public abstract class FindAction extends Action {
 			plid = (Long)plidAndPortletId[0];
 
 			String portletId = (String)plidAndPortletId[1];
+
+			setSourceGroup(request, plid, primaryKey);
 
 			PortletURL portletURL = PortletURLFactoryUtil.create(
 				request, portletId, plid, PortletRequest.RENDER_PHASE);
@@ -134,6 +140,36 @@ public abstract class FindAction extends Action {
 		}
 	}
 
+	protected Object[] findPlidAndPortletId(
+			PermissionChecker permissionChecker, long groupId)
+		throws Exception {
+
+		for (String portletId : _portletIds) {
+			long plid = PortalUtil.getPlidFromPortletId(groupId, portletId);
+
+			if (plid == LayoutConstants.DEFAULT_PLID) {
+				continue;
+			}
+
+			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+			if (!LayoutPermissionUtil.contains(
+					permissionChecker, layout, ActionKeys.VIEW)) {
+
+				continue;
+			}
+
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
+			portletId = getPortletId(layoutTypePortlet, portletId);
+
+			return new Object[] {plid, portletId};
+		}
+
+		return null;
+	}
+
 	protected abstract long getGroupId(long primaryKey) throws Exception;
 
 	protected Object[] getPlidAndPortletId(
@@ -186,27 +222,19 @@ public abstract class FindAction extends Action {
 			}
 		}
 
-		for (String portletId : _portletIds) {
-			plid = PortalUtil.getPlidFromPortletId(groupId, portletId);
+		Object[] plidAndPortletId = findPlidAndPortletId(
+			permissionChecker, groupId);
 
-			if (plid == LayoutConstants.DEFAULT_PLID) {
-				continue;
-			}
+		if ((plidAndPortletId == null) &&
+			SitesUtil.isUserGroupLayoutSetViewable(
+				permissionChecker, themeDisplay.getScopeGroup())) {
 
-			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+			plidAndPortletId = findPlidAndPortletId(
+				permissionChecker, themeDisplay.getScopeGroupId());
+		}
 
-			if (!LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.VIEW)) {
-
-				continue;
-			}
-
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
-			portletId = getPortletId(layoutTypePortlet, portletId);
-
-			return new Object[] {plid, portletId};
+		if (plidAndPortletId != null) {
+			return plidAndPortletId;
 		}
 
 		throw new NoSuchLayoutException();
@@ -247,6 +275,35 @@ public abstract class FindAction extends Action {
 
 		portletURL.setParameter(
 			getPrimaryKeyParameterName(), String.valueOf(primaryKey));
+	}
+
+	protected void setSourceGroup(
+			HttpServletRequest request, long plid, long primaryKey)
+		throws Exception {
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		long sourceGroupId = getGroupId(primaryKey);
+
+		if ((sourceGroupId == layout.getGroupId()) ||
+			(layout.getPrivateLayout() &&
+			 !SitesUtil.isUserGroupLayoutSetViewable(
+				permissionChecker, layout.getGroup()))) {
+
+			return;
+		}
+
+		Group sourceGroup = GroupLocalServiceUtil.getGroup(sourceGroupId);
+
+		layout = new VirtualLayout(layout, sourceGroup);
+
+		request.setAttribute(WebKeys.LAYOUT, layout);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(FindAction.class);
