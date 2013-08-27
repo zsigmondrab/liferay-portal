@@ -356,9 +356,15 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		long companyId, long groupId, long fileEntryId, long fileVersionId) {
 
 		try {
-			DLStoreUtil.deleteDirectory(
-				companyId, REPOSITORY_ID,
-				getPathSegment(groupId, fileEntryId, fileVersionId, true));
+			String dirName = getPathSegment(
+				groupId, fileEntryId, fileVersionId, true);
+
+			if (fileVersionId > 0) {
+				dirName = dirName.concat(StringPool.PERIOD);
+				dirName = dirName.concat(getPreviewType());
+			}
+
+			DLStoreUtil.deleteDirectory(companyId, REPOSITORY_ID, dirName);
 		}
 		catch (Exception e) {
 		}
