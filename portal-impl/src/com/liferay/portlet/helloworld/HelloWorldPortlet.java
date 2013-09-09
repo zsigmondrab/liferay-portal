@@ -28,6 +28,7 @@ import javax.portlet.RenderResponse;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Zsolt Balogh
  */
 public class HelloWorldPortlet extends GenericPortlet {
 
@@ -40,7 +41,7 @@ public class HelloWorldPortlet extends GenericPortlet {
 
 		PrintWriter writer = renderResponse.getWriter();
 
-		writer.print("Welcome to " + ReleaseInfo.getReleaseInfo() + ".");
+		writer.print("Welcome to " + ReleaseInfo.getReleaseInfo() + ". Test.");
 
 		writer.close();
 	}
