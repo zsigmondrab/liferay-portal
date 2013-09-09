@@ -41,7 +41,7 @@ public class HelloWorldPortlet extends GenericPortlet {
 
 		PrintWriter writer = renderResponse.getWriter();
 
-		writer.print("Welcome to " + ReleaseInfo.getReleaseInfo() + ". Test.");
+		writer.print("Welcome to " + ReleaseInfo.getReleaseInfo() + ". Test2.");
 
 		writer.close();
 	}
