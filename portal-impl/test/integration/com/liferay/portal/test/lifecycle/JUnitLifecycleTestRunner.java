@@ -26,40 +26,40 @@ public class JUnitLifecycleTestRunner
 	extends AbstractIntegrationJUnitTestRunner {
 
 	/**
-	 * Creates a BlockJUnit4ClassRunner to run {@code klass}
+	 * Creates a BlockJUnit4ClassRunner to run {@code clazz}
 	 *
 	 * @throws org.junit.runners.model.InitializationError
 	 *          if the test class is malformed.
 	 */
-	public JUnitLifecycleTestRunner(Class<?> klass) throws InitializationError {
-		super(klass);
+	public JUnitLifecycleTestRunner(Class<?> clazz) throws InitializationError {
+		super(clazz);
 
-		System.out.println("JUnitLifecycleTestRunner constructor");
+		System.out.println("[TestRunner] JUnitLifecycleTestRunner constructor");
 	}
 
 	public void initApplicationContext() {
-		System.out.println("[Runner] creating application context");
+		System.out.println("[TestRunner] creating application context");
 	}
 
 	@Override
 	protected Statement withAfters(
 		FrameworkMethod frameworkMethod, Object instance, Statement statement) {
 
-		System.out.println("[Runner] with afters");
+		System.out.println("[TestRunner] with afters");
 
 		return super.withAfters(frameworkMethod, instance, statement);
 	}
 
 	@Override
 	protected Statement withAfterClasses(Statement statement) {
-		System.out.println("[Runner] with after class");
+		System.out.println("[TestRunner] with after class");
 
 		return super.withAfterClasses(statement);
 	}
 
 	@Override
 	protected Statement withBeforeClasses(Statement statement) {
-		System.out.println("[Runner] with before class");
+		System.out.println("[TestRunner] with before class");
 
 		return super.withBeforeClasses(statement);
 	}
@@ -68,7 +68,7 @@ public class JUnitLifecycleTestRunner
 	protected Statement withBefores(
 		FrameworkMethod frameworkMethod, Object instance, Statement statement) {
 
-		System.out.println("[Runner] with befores");
+		System.out.println("[TestRunner] with befores");
 
 		return super.withBefores(frameworkMethod, instance, statement);
 	}

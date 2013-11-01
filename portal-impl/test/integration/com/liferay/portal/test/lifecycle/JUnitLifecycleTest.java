@@ -30,19 +30,14 @@ import org.junit.runner.RunWith;
 @RunWith(JUnitLifecycleTestRunner.class)
 public class JUnitLifecycleTest {
 
-	@Before
-	public void setUp() {
+	@BeforeClass
+	public static void setUpClass() {
 		System.out.println("[Test Class] before class");
 	}
 
-	@BeforeClass
-	public static void setUpClass() {
+	@Before
+	public void setUp() {
 		System.out.println("[Test Class] before method");
-	}
-
-	@After
-	public void tearDown() {
-		System.out.println("[Test Class] after method");
 	}
 
 	@AfterClass
@@ -50,9 +45,19 @@ public class JUnitLifecycleTest {
 		System.out.println("[Test Class] after class");
 	}
 
+	@After
+	public void tearDown() {
+		System.out.println("[Test Class] after method");
+	}
+
 	@Test
 	public void testJUnitLifecycle() {
-		System.out.println("In the middle of the test");
+		System.out.println("[Test Class] In the middle of the test");
+	}
+
+	@Test
+	public void testJUnitLifecycle2() {
+		System.out.println("[Test Class] In the middle of the test 2");
 	}
 
 }

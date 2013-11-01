@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.test.TestContext;
  * @author Manuel de la Peña
  */
 public class JUnitLifecycleExecutionTestListener
-	implements	ExecutionTestListener {
+	implements ExecutionTestListener {
 
 	public void runAfterClass(TestContext testContext) {
 		System.out.println("[TestListener] after class");

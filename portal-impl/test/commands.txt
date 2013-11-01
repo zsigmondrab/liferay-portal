@@ -1,0 +1,11 @@
+ant test-class -Dtest.class=JUnitLifecycleTest
+
+ant test-method -Dtest.class=JUnitLifecycleTest -Dtest.methods=testJUnitLifecycle2
+
+ant test-class -Dtest.class=JUnitParametersTest
+
+ant test-class -Dtest.class=JUnitParameters2Test
+
+ant test-class -Dtest.class=JUnitSuiteTest
+
+ant test-class -Dtest.class=com/liferay/portal/test/annotations/*Test
