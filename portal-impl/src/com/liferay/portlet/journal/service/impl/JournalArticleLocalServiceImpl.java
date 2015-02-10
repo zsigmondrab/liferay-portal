@@ -5981,6 +5981,16 @@ public class JournalArticleLocalServiceImpl
 
 		for (JournalArticle article : articles) {
 			if (PropsValues.JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS) {
+				JournalArticle latestArticle =
+					journalArticlePersistence.findByG_A_NotST_First(
+					article.getGroupId(), article.getArticleId(),
+					WorkflowConstants.STATUS_IN_TRASH,
+					new ArticleVersionComparator());
+
+				if (latestArticle.getVersion() > article.getVersion()) {
+					continue;
+				}
+
 				List<JournalArticle> currentArticles =
 					journalArticlePersistence.findByG_A(
 						article.getGroupId(), article.getArticleId(),
