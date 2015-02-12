@@ -38,10 +38,10 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
+import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 
 import java.text.DateFormat;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -210,6 +210,17 @@ public class SitemapImpl implements Sitemap {
 		List<JournalArticle> journalArticles =
 			JournalArticleServiceUtil.getArticlesByLayoutUuid(
 				layout.getGroupId(), layout.getUuid());
+
+		for (JournalArticle article : journalArticles) {
+			JournalArticle latestArticle =
+				JournalArticleLocalServiceUtil.getLatestArticle(
+					article.getResourcePrimKey(),
+					WorkflowConstants.STATUS_APPROVED);
+
+			if (latestArticle.getVersion() > article.getVersion()) {
+				return;
+			}
+		}
 
 		if (journalArticles.isEmpty()) {
 			return;
