@@ -308,6 +308,26 @@
 				[$FOLDER_PARENT_FOLDER_ID$]
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByG_L">
+		<![CDATA[
+			SELECT
+				JournalArticle.*
+			FROM
+				JournalArticle
+			LEFT JOIN JournalArticle tempJournalArticle ON
+				[$STATUS_JOIN$] AND
+				(JournalArticle.groupId = tempJournalArticle.groupId) AND
+				(JournalArticle.articleId = tempJournalArticle.articleId) AND
+				(JournalArticle.version < tempJournalArticle.version)
+			WHERE
+				(JournalArticle.groupId = ?) AND
+				(JournalArticle.layoutUuid = ?) AND
+				(JournalArticle.[$STATUS$]) AND
+				(tempJournalArticle.id_ IS NULL)
+			ORDER BY
+				JournalArticle.id_ ASC
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findA_ByG_F">
 		<![CDATA[
 			SELECT

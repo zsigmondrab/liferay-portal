@@ -67,6 +67,9 @@ public class JournalArticleFinderImpl
 		JournalArticleFinder.class.getName() +
 			".countByC_G_F_C_A_V_T_D_C_S_T_D_R";
 
+	public static final String FIND_BY_G_L =
+		JournalArticleFinder.class.getName() + ".findByG_L";
+
 	public static final String FIND_BY_EXPIRATION_DATE =
 		JournalArticleFinder.class.getName() + ".findByExpirationDate";
 
@@ -463,6 +466,39 @@ public class JournalArticleFinderImpl
 			titles, descriptions, contents, ddmStructureKeys, ddmTemplateKeys,
 			displayDateGT, displayDateLT, reviewDate, andOperator,
 			queryDefinition, true);
+	}
+
+	@Override
+	public List<JournalArticle> findByG_L(long groupId, String layoutUuid, QueryDefinition<JournalArticle> queryDefinition) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(
+				FIND_BY_G_L, queryDefinition);
+
+			sql = replaceStatusJoin(sql, queryDefinition);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity(
+				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(layoutUuid);
+			qPos.add(queryDefinition.getStatus());
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	@Override

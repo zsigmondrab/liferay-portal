@@ -1793,6 +1793,10 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		long groupId, java.lang.String urlTitle, int status)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getLatestArticles(
+		long groupId, java.lang.String layoutUuid);
+
 	/**
 	* Returns the latest version number of the web content with the group and
 	* article ID.

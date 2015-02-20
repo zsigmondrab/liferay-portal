@@ -285,6 +285,12 @@ public class JournalArticleFinderUtil {
 			displayDateLT, reviewDate, andOperator, queryDefinition);
 	}
 
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_L(
+		long groupId, java.lang.String layoutUuid,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {
+		return getFinder().findByG_L(groupId, layoutUuid, queryDefinition);
+	}
+
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByExpirationDate(
 		long classNameId, java.util.Date expirationDateLT,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {

@@ -2753,6 +2753,14 @@ public class JournalArticleLocalServiceImpl
 
 		return articles.get(0);
 	}
+	
+	@Override
+	public List<JournalArticle> getLatestArticles(long groupId, String layoutUuid) {
+		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
+				WorkflowConstants.STATUS_APPROVED);
+		
+		return journalArticleFinder.findByG_L(groupId, layoutUuid, queryDefinition);
+	}
 
 	/**
 	 * Returns the latest web content article with the group and article ID.

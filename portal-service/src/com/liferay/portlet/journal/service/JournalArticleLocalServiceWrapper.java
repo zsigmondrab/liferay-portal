@@ -2080,6 +2080,12 @@ public class JournalArticleLocalServiceWrapper
 			urlTitle, status);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getLatestArticles(
+		long groupId, java.lang.String layoutUuid) {
+		return _journalArticleLocalService.getLatestArticles(groupId, layoutUuid);
+	}
+
 	/**
 	* Returns the latest version number of the web content with the group and
 	* article ID.
