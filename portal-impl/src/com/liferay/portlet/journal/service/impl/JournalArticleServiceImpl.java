@@ -771,7 +771,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	public List<JournalArticle> getArticlesByLayoutUuid(
 		long groupId, String layoutUuid) {
 
-		return journalArticlePersistence.filterFindByG_L(groupId, layoutUuid);
+		return journalArticleLocalService.getLatestArticles(
+			groupId, layoutUuid);
 	}
 
 	/**
