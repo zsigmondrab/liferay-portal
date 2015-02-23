@@ -205,6 +205,10 @@ public interface JournalArticleFinder {
 		long groupId, java.util.List<java.lang.Long> folderIds,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition);
 
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_L(
+		long groupId, java.lang.String layoutUuid,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition);
+
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_C_S(
 		long groupId, long classNameId, java.lang.String ddmStructureKey,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition);

@@ -333,6 +333,12 @@ public class JournalArticleFinderUtil {
 		return getFinder().findByG_F(groupId, folderIds, queryDefinition);
 	}
 
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_L(
+		long groupId, java.lang.String layoutUuid,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {
+		return getFinder().findByG_L(groupId, layoutUuid, queryDefinition);
+	}
+
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_C_S(
 		long groupId, long classNameId, java.lang.String ddmStructureKey,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {
