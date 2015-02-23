@@ -86,7 +86,7 @@ public class JournalArticleFinderImpl
 		JournalArticleFinder.class.getName() + ".findByG_F";
 
 	public static final String FIND_BY_G_L =
-			JournalArticleFinder.class.getName() + ".findByG_L";
+		JournalArticleFinder.class.getName() + ".findByG_L";
 
 	public static final String FIND_BY_G_C_S =
 		JournalArticleFinder.class.getName() + ".findByG_C_S";
@@ -686,16 +686,15 @@ public class JournalArticleFinderImpl
 
 	@Override
 	public List<JournalArticle> findByG_L(
-			long groupId, String layoutUuid,
-			QueryDefinition<JournalArticle> queryDefinition) {
+		long groupId, String layoutUuid,
+		QueryDefinition<JournalArticle> queryDefinition) {
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
-				FIND_BY_G_L, queryDefinition);
+			String sql = CustomSQLUtil.get(FIND_BY_G_L, queryDefinition);
 
 			sql = replaceStatusJoin(sql, queryDefinition);
 
