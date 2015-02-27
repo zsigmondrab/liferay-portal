@@ -2872,6 +2872,25 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the latest web content articles matching the group, and layout
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  layoutUuid the unique string identifying the web content article's
+	 *         display page
+	 * @return the latest matching web content article
+	 */
+	@Override
+	public List<JournalArticle> getLatestArticles(
+		long groupId, String layoutUuid) {
+
+		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
+			WorkflowConstants.STATUS_APPROVED);
+
+		return journalArticleFinder.findByG_L(
+			groupId, layoutUuid, queryDefinition);
+	}
+
+	/**
 	 * Returns the latest version number of the web content with the group and
 	 * article ID.
 	 *

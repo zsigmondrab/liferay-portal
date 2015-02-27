@@ -1794,6 +1794,18 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
+	* Returns the latest web content articles matching the group, and layout
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param layoutUuid the unique string identifying the web content article's
+	display page
+	* @return the latest matching web content article
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getLatestArticles(
+		long groupId, java.lang.String layoutUuid);
+
+	/**
 	* Returns the latest version number of the web content with the group and
 	* article ID.
 	*

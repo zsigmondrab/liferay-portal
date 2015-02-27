@@ -1985,6 +1985,19 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	/**
+	* Returns the latest web content articles matching the group, and layout
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param layoutUuid the unique string identifying the web content article's
+	display page
+	* @return the latest matching web content article
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getLatestArticles(
+		long groupId, java.lang.String layoutUuid) {
+		return getService().getLatestArticles(groupId, layoutUuid);
+	}
+
+	/**
 	* Returns the latest version number of the web content with the group and
 	* article ID.
 	*
