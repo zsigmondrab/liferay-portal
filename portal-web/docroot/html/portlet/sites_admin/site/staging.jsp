@@ -217,6 +217,10 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 				for (Portlet curPortlet : dataSiteLevelPortlets) {
 					String portletDataHandlerClass = curPortlet.getPortletDataHandlerClass();
 
+					if (curPortlet.getPortletDataHandlerClass().contains("DDM")) {
+						continue;
+					}
+
 					if (!portletDataHandlerClasses.contains(portletDataHandlerClass)) {
 						portletDataHandlerClasses.add(portletDataHandlerClass);
 					}
