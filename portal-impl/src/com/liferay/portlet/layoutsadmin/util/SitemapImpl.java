@@ -218,6 +218,15 @@ public class SitemapImpl implements Sitemap {
 		Set<String> processedArticleIds = new HashSet<>();
 
 		for (JournalArticle journalArticle : journalArticles) {
+			JournalArticle latestArticle =
+				JournalArticleServiceUtil.getLatestArticle(
+					journalArticle.getGroupId(), journalArticle.getArticleId(),
+				WorkflowConstants.STATUS_APPROVED);
+
+			if (latestArticle.getVersion() > journalArticle.getVersion()) {
+				continue;
+			}
+
 			if (processedArticleIds.contains(
 					journalArticle.getArticleId()) ||
 				(journalArticle.getStatus() !=
