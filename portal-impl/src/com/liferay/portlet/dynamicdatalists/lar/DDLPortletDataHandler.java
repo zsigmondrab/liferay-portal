@@ -75,7 +75,8 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 				DDLRecord.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "data-definitions", true, false, null,
-				DDMStructure.class.getName(), DDLRecordSet.class.getName()));
+				DDMStructure.class.getName(), DDLRecordSet.class.getName()),
+			new PortletDataHandlerBoolean(NAMESPACE, "referenced-content"));
 
 		XStreamAliasRegistryUtil.register(DDLRecordImpl.class, "DDLRecord");
 		XStreamAliasRegistryUtil.register(
