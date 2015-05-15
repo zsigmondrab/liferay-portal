@@ -840,9 +840,15 @@ public class JournalArticleLocalServiceImpl
 			newArticle.setStatus(oldArticle.getStatus());
 		}
 
-		newArticle.setExpandoBridgeAttributes(oldArticle);
-
 		journalArticlePersistence.update(newArticle);
+
+		// Expando
+
+		ExpandoBridge newExpandoBridge = newArticle.getExpandoBridge();
+		ExpandoBridge oldExpandoBridge = oldArticle.getExpandoBridge();
+
+		newExpandoBridge.setAttributes(
+			oldExpandoBridge.getAttributes(false), false);
 
 		// Resources
 
