@@ -165,12 +165,29 @@ public class Field implements Serializable {
 
 		return getValue(defaultLocale);
 	}
-
+	
 	public Serializable getValue(Locale locale) {
+		return getValue(locale, false);
+	}
+
+	public Serializable getValue(Locale locale, boolean excludeBlankValues) {
 		List<Serializable> values = _getValues(locale);
 
 		if (values.isEmpty()) {
 			return null;
+		}
+		
+		if (excludeBlankValues) {
+			List<Serializable> valuesWithoutBlanks = 
+				new ArrayList<Serializable>(values.size());
+			
+			for(Serializable value : values) {
+				if (!(value.toString().equals(""))) {
+					valuesWithoutBlanks.add(value);
+				}
+			}
+			
+			values = valuesWithoutBlanks;
 		}
 
 		try {

@@ -76,7 +76,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 					String name = encodeName(
 						ddmStructure.getStructureId(), field.getName(), locale);
 
-					Serializable value = field.getValue(locale);
+					Serializable value = field.getValue(locale, true);
 
 					if (value instanceof BigDecimal) {
 						document.addNumberSortable(name, (BigDecimal)value);
@@ -230,8 +230,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 					continue;
 				}
 
-				Serializable value = field.getValue(locale);
-
+				Serializable value = field.getValue(locale, true);
+				
 				if ((value instanceof Boolean) || (value instanceof Number)) {
 					sb.append(value);
 					sb.append(StringPool.SPACE);
