@@ -114,6 +114,7 @@ import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
+import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.journal.ArticleContentException;
 import com.liferay.portlet.journal.ArticleDisplayDateException;
 import com.liferay.portlet.journal.ArticleExpirationDateException;
@@ -839,9 +840,15 @@ public class JournalArticleLocalServiceImpl
 			newArticle.setStatus(oldArticle.getStatus());
 		}
 
-		newArticle.setExpandoBridgeAttributes(oldArticle);
-
 		journalArticlePersistence.update(newArticle);
+
+		// Expando
+
+		ExpandoBridge newExpandoBridge = newArticle.getExpandoBridge();
+		ExpandoBridge oldExpandoBridge = oldArticle.getExpandoBridge();
+
+		newExpandoBridge.setAttributes(
+			oldExpandoBridge.getAttributes(false), false);
 
 		// Resources
 
@@ -5262,7 +5269,8 @@ public class JournalArticleLocalServiceImpl
 			article.setStatus(WorkflowConstants.STATUS_EXPIRED);
 		}
 
-		article.setExpandoBridgeAttributes(serviceContext);
+		setExpandoBridgeAttributes(
+			article, latestArticle, addNewVersion, serviceContext);
 
 		journalArticlePersistence.update(article);
 
@@ -7368,6 +7376,28 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 
 		subscriptionSender.flushNotificationsAsync();
+	}
+
+	protected void setExpandoBridgeAttributes(
+		JournalArticle article, JournalArticle latestArticle,
+		boolean addNewVersion, ServiceContext serviceContext) {
+
+		Map<String, Serializable> attributes =
+			serviceContext.getExpandoBridgeAttributes();
+
+		if (addNewVersion && attributes.isEmpty()) {
+			ExpandoBridge latestExpandoBridge =
+				latestArticle.getExpandoBridge();
+
+			ExpandoBridge expandoBridge = article.getExpandoBridge();
+
+			attributes = latestExpandoBridge.getAttributes(false);
+
+			expandoBridge.setAttributes(attributes, false);
+		}
+		else {
+			article.setExpandoBridgeAttributes(serviceContext);
+		}
 	}
 
 	protected void startWorkflowInstance(
