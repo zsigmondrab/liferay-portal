@@ -174,6 +174,73 @@ public class AssetPublisherUtil {
 		portletPreferences.store();
 	}
 
+	public static void addPreferenceValues(
+		AssetEntryQuery assetEntryQuery, PortletPreferences portletPreferences,
+		Layout layout, long[] groupIds, int start, int max) {
+
+		assetEntryQuery.setGroupIds(groupIds);
+
+		boolean anyAssetType = GetterUtil.getBoolean(
+			portletPreferences.getValue("anyAssetType", null), true);
+
+		if (!anyAssetType) {
+			long[] availableClassNameIds =
+				AssetRendererFactoryRegistryUtil.getClassNameIds(
+					layout.getCompanyId());
+
+			long[] classNameIds = getClassNameIds(
+				portletPreferences, availableClassNameIds);
+
+			assetEntryQuery.setClassNameIds(classNameIds);
+		}
+
+		long[] classTypeIds = GetterUtil.getLongValues(
+			portletPreferences.getValues("classTypeIds", null));
+
+		assetEntryQuery.setClassTypeIds(classTypeIds);
+
+		boolean enablePermissions = GetterUtil.getBoolean(
+			portletPreferences.getValue("enablePermissions", null));
+
+		assetEntryQuery.setEnablePermissions(enablePermissions);
+
+		assetEntryQuery.setEnd(max);
+
+		boolean excludeZeroViewCount = GetterUtil.getBoolean(
+			portletPreferences.getValue("excludeZeroViewCount", null));
+
+		assetEntryQuery.setExcludeZeroViewCount(excludeZeroViewCount);
+
+		boolean showOnlyLayoutAssets = GetterUtil.getBoolean(
+			portletPreferences.getValue("showOnlyLayoutAssets", null));
+
+		if (showOnlyLayoutAssets) {
+			assetEntryQuery.setLayout(layout);
+		}
+
+		String orderByColumn1 = GetterUtil.getString(
+			portletPreferences.getValue("orderByColumn1", "modifiedDate"));
+
+		assetEntryQuery.setOrderByCol1(orderByColumn1);
+
+		String orderByColumn2 = GetterUtil.getString(
+			portletPreferences.getValue("orderByColumn2", "title"));
+
+		assetEntryQuery.setOrderByCol2(orderByColumn2);
+
+		String orderByType1 = GetterUtil.getString(
+			portletPreferences.getValue("orderByType1", "DESC"));
+
+		assetEntryQuery.setOrderByType1(orderByType1);
+
+		String orderByType2 = GetterUtil.getString(
+			portletPreferences.getValue("orderByType2", "ASC"));
+
+		assetEntryQuery.setOrderByType2(orderByType2);
+
+		assetEntryQuery.setStart(start);
+	}
+
 	public static void addSelection(
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences, String portletId)
@@ -363,67 +430,8 @@ public class AssetPublisherUtil {
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
 			portletPreferences, groupIds, null, null);
 
-		assetEntryQuery.setGroupIds(groupIds);
-
-		boolean anyAssetType = GetterUtil.getBoolean(
-			portletPreferences.getValue("anyAssetType", null), true);
-
-		if (!anyAssetType) {
-			long[] availableClassNameIds =
-				AssetRendererFactoryRegistryUtil.getClassNameIds(
-					layout.getCompanyId());
-
-			long[] classNameIds = getClassNameIds(
-				portletPreferences, availableClassNameIds);
-
-			assetEntryQuery.setClassNameIds(classNameIds);
-		}
-
-		long[] classTypeIds = GetterUtil.getLongValues(
-			portletPreferences.getValues("classTypeIds", null));
-
-		assetEntryQuery.setClassTypeIds(classTypeIds);
-
-		boolean enablePermissions = GetterUtil.getBoolean(
-			portletPreferences.getValue("enablePermissions", null));
-
-		assetEntryQuery.setEnablePermissions(enablePermissions);
-
-		assetEntryQuery.setEnd(max);
-
-		boolean excludeZeroViewCount = GetterUtil.getBoolean(
-			portletPreferences.getValue("excludeZeroViewCount", null));
-
-		assetEntryQuery.setExcludeZeroViewCount(excludeZeroViewCount);
-
-		boolean showOnlyLayoutAssets = GetterUtil.getBoolean(
-			portletPreferences.getValue("showOnlyLayoutAssets", null));
-
-		if (showOnlyLayoutAssets) {
-			assetEntryQuery.setLayout(layout);
-		}
-
-		String orderByColumn1 = GetterUtil.getString(
-			portletPreferences.getValue("orderByColumn1", "modifiedDate"));
-
-		assetEntryQuery.setOrderByCol1(orderByColumn1);
-
-		String orderByColumn2 = GetterUtil.getString(
-			portletPreferences.getValue("orderByColumn2", "title"));
-
-		assetEntryQuery.setOrderByCol2(orderByColumn2);
-
-		String orderByType1 = GetterUtil.getString(
-			portletPreferences.getValue("orderByType1", "DESC"));
-
-		assetEntryQuery.setOrderByType1(orderByType1);
-
-		String orderByType2 = GetterUtil.getString(
-			portletPreferences.getValue("orderByType2", "ASC"));
-
-		assetEntryQuery.setOrderByType2(orderByType2);
-
-		assetEntryQuery.setStart(0);
+		addPreferenceValues(
+			assetEntryQuery, portletPreferences, layout, groupIds, 0, max);
 
 		if (checkPermission) {
 			return AssetEntryServiceUtil.getEntries(assetEntryQuery);

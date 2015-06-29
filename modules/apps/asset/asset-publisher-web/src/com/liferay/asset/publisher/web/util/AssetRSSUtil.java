@@ -14,6 +14,9 @@
 
 package com.liferay.asset.publisher.web.util;
 
+import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfigurationValues;
+import com.liferay.asset.publisher.web.context.AssetPublisherDisplayContext;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -32,6 +35,7 @@ import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.util.RSSUtil;
 
 import com.sun.syndication.feed.synd.SyndContent;
@@ -52,6 +56,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -83,10 +89,43 @@ public class AssetRSSUtil {
 		String format = RSSUtil.getFeedTypeFormat(rssFeedType);
 		double version = RSSUtil.getFeedTypeVersion(rssFeedType);
 
+		List<AssetEntry> assetEntries = new ArrayList<>();
+
+		if (selectionStyle.equals("dynamic")) {
+			int rssDelta = GetterUtil.getInteger(
+				portletPreferences.getValue("rssDelta", "20"));
+
+			AssetPublisherDisplayContext assetPublisherDisplayContext =
+				new AssetPublisherDisplayContext(
+					PortalUtil.getHttpServletRequest(portletRequest),
+					portletPreferences);
+
+			AssetEntryQuery assetEntryQuery =
+				assetPublisherDisplayContext.getAssetEntryQuery();
+
+			SearchContainer<AssetEntry> searchContainer = new SearchContainer<>(
+				portletRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM,
+				rssDelta, portletResponse.createRenderURL(), null, null);
+
+			HttpServletRequest httpServletRequest =
+				PortalUtil.getHttpServletRequest(portletRequest);
+
+			AssetEntryQueryResult assetEntryQueryResult =
+				new AssetEntryQueryResult(
+					assetEntryQuery, httpServletRequest, portletPreferences,
+					assetPublisherDisplayContext.getClassNameIds(),
+					AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX,
+					searchContainer);
+
+			assetEntries = assetEntryQueryResult.getResults();
+		}
+		else {
+			assetEntries = getAssetEntries(portletRequest, portletPreferences);
+		}
+
 		String rss = exportToRSS(
 			portletRequest, portletResponse, rssName, null, format, version,
-			rssDisplayStyle, assetLinkBehavior,
-			getAssetEntries(portletRequest, portletPreferences));
+			rssDisplayStyle, assetLinkBehavior, assetEntries);
 
 		return rss.getBytes(StringPool.UTF8);
 	}
