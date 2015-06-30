@@ -66,6 +66,7 @@ import com.liferay.util.JS;
 
 import java.text.DateFormat;
 import java.text.Format;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -580,13 +581,13 @@ public class LayoutTypePortletImpl
 			if (hasNonstaticPortletId(columnId, portletId)) {
 				return true;
 			}
-
-			if (hasStaticPortletId(columnId, portletId)) {
-				return true;
-			}
 		}
 
 		Layout layout = getLayout();
+
+		if (hasStaticPortletId(layout, columns, portletId)) {
+			return true;
+		}
 
 		if (layout.isTypeControlPanel()) {
 			return false;
@@ -1739,6 +1740,71 @@ public class LayoutTypePortletImpl
 					nonstaticPortletId).equals(portletId)) {
 
 				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected boolean hasStaticPortletId(
+			Layout layout, List<String> columns, String portletId)
+		throws PortalException {
+
+		for (String columnId : columns) {
+			String[] staticPortletIdsStart = getStaticPortletIds(
+				PropsKeys.LAYOUT_STATIC_PORTLETS_START + columnId);
+
+			String[] staticPortletIdsEnd = getStaticPortletIds(
+				PropsKeys.LAYOUT_STATIC_PORTLETS_END + columnId);
+
+			for (String staticPortletId : staticPortletIdsStart) {
+				if (staticPortletId.equals(portletId) ||
+					PortletConstants.getRootPortletId(
+						staticPortletId).equals(portletId)) {
+
+					return true;
+				}
+			}
+
+			for (String staticPortletId : staticPortletIdsEnd) {
+				if (staticPortletId.equals(portletId) ||
+					PortletConstants.getRootPortletId(
+						staticPortletId).equals(portletId)) {
+
+					return true;
+				}
+			}
+		}
+
+		String[] staticPortletIdsAll = getStaticPortletIds(
+			PropsKeys.LAYOUT_STATIC_PORTLETS_ALL);
+
+		for (String staticPortletId : staticPortletIdsAll) {
+			if (staticPortletId.equals(portletId) ||
+				PortletConstants.getRootPortletId(
+					staticPortletId).equals(portletId)) {
+
+				return true;
+			}
+		}
+
+		if (PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+				portletId) > 0) {
+
+			javax.portlet.PortletPreferences portletPreferences =
+				PortletPreferencesLocalServiceUtil.getPreferences(
+					layout.getCompanyId(), 0,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+					portletId, StringPool.BLANK);
+
+			boolean isStatic = Boolean.parseBoolean(
+				portletPreferences.getValue("static", "false"));
+
+			if (isStatic) {
+				PortletPreferencesLocalServiceUtil.deletePortletPreferences(
+					0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+					portletId);
 			}
 		}
 
