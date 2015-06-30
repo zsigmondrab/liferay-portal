@@ -66,13 +66,14 @@ import com.liferay.util.JS;
 
 import java.text.DateFormat;
 import java.text.Format;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.portlet.ReadOnlyException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -271,6 +272,8 @@ public class LayoutTypePortletImpl
 		List<Portlet> staticPortlets = getStaticPortlets(
 			PropsKeys.LAYOUT_STATIC_PORTLETS_ALL);
 
+		updateStaticPortletPreferences(staticPortlets);
+
 		List<Portlet> embeddedPortlets = getEmbeddedPortlets(
 			portlets, staticPortlets);
 
@@ -318,8 +321,12 @@ public class LayoutTypePortletImpl
 		List<Portlet> startPortlets = getStaticPortlets(
 			PropsKeys.LAYOUT_STATIC_PORTLETS_START + columnId);
 
+		updateStaticPortletPreferences(startPortlets);
+
 		List<Portlet> endPortlets = getStaticPortlets(
 			PropsKeys.LAYOUT_STATIC_PORTLETS_END + columnId);
+
+		updateStaticPortletPreferences(endPortlets);
 
 		return addStaticPortlets(portlets, startPortlets, endPortlets);
 	}
@@ -1874,6 +1881,38 @@ public class LayoutTypePortletImpl
 		_portalPreferences.setValue(
 			CustomizedPages.namespacePlid(getPlid()), _MODIFIED_DATE,
 			_dateFormat.format(new Date()));
+	}
+
+	protected void updateStaticPortletPreferences(
+		List<Portlet> staticPortlets) {
+
+		Layout layout = getLayout();
+
+		for (Portlet portlet : staticPortlets) {
+			String portletId = portlet.getPortletId();
+
+			javax.portlet.PortletPreferences portletPreferences =
+				PortletPreferencesLocalServiceUtil.getPreferences(
+					layout.getCompanyId(), 0,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+					portletId, StringPool.BLANK);
+
+			boolean isStatic = Boolean.parseBoolean(
+				portletPreferences.getValue("static", "false"));
+
+			if (!isStatic) {
+				try {
+					portletPreferences.setValue("static", "true");
+
+					PortletPreferencesLocalServiceUtil.updatePreferences(
+						0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+						layout.getPlid(), portletId, portletPreferences);
+				}
+				catch (ReadOnlyException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	private static final String _MODIFIED_DATE = "modifiedDate";
