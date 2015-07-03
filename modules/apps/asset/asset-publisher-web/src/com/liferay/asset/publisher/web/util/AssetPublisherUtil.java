@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -82,6 +83,7 @@ import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.util.AssetEntryQueryProcessor;
+import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.sites.util.SitesUtil;
 
@@ -102,6 +104,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -663,6 +667,65 @@ public class AssetPublisherUtil {
 		return assetEntryQuery;
 	}
 
+	public static BaseModelSearchResult<AssetEntry> getAssetEntryQueryResult(
+			AssetEntryQuery assetEntryQuery, HttpServletRequest request,
+			String portletName, int start, int end, boolean searchWithIndex)
+		throws Exception {
+
+		List<AssetEntry> results = new ArrayList<>();
+		int groupTotal = 0;
+
+		if (searchWithIndex && (assetEntryQuery.getLinkedAssetEntryId() == 0) &&
+			!portletName.equals(
+				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) &&
+			!portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS)) {
+
+			BaseModelSearchResult<AssetEntry> baseModelSearchResult =
+				AssetUtil.searchAssetEntries(
+					request, assetEntryQuery, start, end);
+
+			groupTotal = baseModelSearchResult.getLength();
+
+			results = baseModelSearchResult.getBaseModels();
+		}
+		else {
+			groupTotal = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+
+			assetEntryQuery.setStart(start);
+			assetEntryQuery.setEnd(end);
+
+			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+		}
+
+		return new BaseModelSearchResult<>(results, groupTotal);
+	}
+
+	public static BaseModelSearchResult<AssetEntry> getAssetEntryQueryResult(
+			PortletPreferences portletPreferences,
+			AssetEntryQuery assetEntryQuery, long[] classNameIds, int start,
+			int end, HttpServletRequest request, String portletName,
+			AssetCategory assetCategory, boolean searchWithIndex)
+		throws Exception {
+
+		assetEntryQuery.setClassNameIds(classNameIds);
+
+		long[] oldAllCategoryIds = assetEntryQuery.getAllCategoryIds();
+
+		long[] newAllAssetCategoryIds = ArrayUtil.append(
+			oldAllCategoryIds, assetCategory.getCategoryId());
+
+		assetEntryQuery.setAllCategoryIds(newAllAssetCategoryIds);
+
+		BaseModelSearchResult<AssetEntry> baseModelSearchResult =
+			getAssetEntryQueryResult(
+				assetEntryQuery, request, portletName, start, end,
+				searchWithIndex);
+
+		assetEntryQuery.setAllCategoryIds(oldAllCategoryIds);
+
+		return baseModelSearchResult;
+	}
+
 	public static String[] getAssetTagNames(
 			PortletPreferences portletPreferences)
 		throws Exception {
@@ -1020,6 +1083,19 @@ public class AssetPublisherUtil {
 		}
 
 		return ArrayUtil.toLongArray(groupIds);
+	}
+
+	public static int getLimit(int groupTotal, int limit) {
+		if (groupTotal > 0) {
+			if ((limit > 0) && (limit > groupTotal)) {
+				limit -= groupTotal;
+			}
+			else {
+				limit = 0;
+			}
+		}
+
+		return limit;
 	}
 
 	public static String getScopeId(Group group, long scopeGroupId)
