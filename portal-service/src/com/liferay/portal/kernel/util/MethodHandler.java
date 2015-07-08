@@ -35,27 +35,6 @@ public class MethodHandler implements Serializable {
 		_arguments = arguments;
 	}
 
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof MethodHandler)) {
-			return false;
-		}
-
-		MethodHandler methodHandler = (MethodHandler)object;
-
-		if (Arrays.equals(_arguments, methodHandler._arguments) &&
-			Validator.equals(_methodKey, methodHandler._methodKey)) {
-
-			return true;
-		}
-
-		return true;
-	}
-
 	public Object[] getArguments() {
 		Object[] arguments = new Object[_arguments.length];
 
