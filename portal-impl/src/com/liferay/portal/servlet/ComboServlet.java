@@ -111,6 +111,15 @@ public class ComboServlet extends HttpServlet {
 	}
 
 	protected static String getResourcePath(String modulePath) {
+		return getResourcePath(modulePath, PortalUtil.getPathContext());
+	}
+
+	protected static String getResourcePath(
+		String modulePath, String pathContext) {
+
+		modulePath = StringUtil.replaceFirst(
+			modulePath, pathContext, StringPool.BLANK);
+
 		int index = modulePath.indexOf(CharPool.COLON);
 
 		if (index > 0) {
@@ -378,7 +387,8 @@ public class ComboServlet extends HttpServlet {
 
 		ServletContext servletContext = portletApp.getServletContext();
 
-		String resourcePath = getResourcePath(modulePath);
+		String resourcePath = getResourcePath(
+			modulePath, servletContext.getContextPath());
 
 		if (!PortalUtil.isValidResourceId(resourcePath)) {
 			if (_log.isWarnEnabled()) {

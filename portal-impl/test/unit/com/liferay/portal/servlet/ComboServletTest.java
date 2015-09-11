@@ -120,7 +120,7 @@ public class ComboServletTest extends PowerMockito {
 		ServletConfig servletConfig = new MockServletConfig(
 			_portalServletContext);
 
-		_portalServletContext.setContextPath("portal");
+		_portalServletContext.setContextPath(_CONTEXT);
 
 		when(
 			_portalPortletApp.getServletContext()
@@ -193,27 +193,46 @@ public class ComboServletTest extends PowerMockito {
 	public void testGetResourceRequestDispatcherWithoutPortletId()
 		throws Exception {
 
-		String path = "/js/javascript.js";
+		_comboServlet.getResourceRequestDispatcher(
+			_mockHttpServletRequest, _mockHttpServletResponse, _PATH);
+
+		verify(_portalServletContext).getRequestDispatcher(_PATH);
+	}
+
+	@Test
+	public void testGetResourceRequestDispatcherWithoutPortletIdButContext()
+		throws Exception {
 
 		_comboServlet.getResourceRequestDispatcher(
 			_mockHttpServletRequest, _mockHttpServletResponse,
-			"/js/javascript.js");
+			_CONTEXT + _PATH);
 
-		verify(_portalServletContext);
+		verify(_portalServletContext).getRequestDispatcher(_PATH);
+	}
 
-		_portalServletContext.getRequestDispatcher(path);
+	@Test
+	public void testGetResourceRequestDispatcherWithPortletIdAndContext()
+		throws Exception {
+
+		_comboServlet.getResourceRequestDispatcher(
+			_mockHttpServletRequest, _mockHttpServletResponse,
+			PortletKeys.PORTAL + ":" + _CONTEXT + _PATH);
+
+		verify(_portalServletContext).getRequestDispatcher(_PATH);
 	}
 
 	@Test
 	public void testGetResourceWithPortletId() throws Exception {
 		_comboServlet.getResourceRequestDispatcher(
 			_mockHttpServletRequest, _mockHttpServletResponse,
-			PortletKeys.ADMIN + ":/js/javascript.js");
+			PortletKeys.ADMIN + ":" + _PATH);
 
-		verify(_pluginServletContext);
-
-		_pluginServletContext.getRequestDispatcher("/js/javascript.js");
+		verify(_pluginServletContext).getRequestDispatcher(_PATH);
 	}
+
+	private static final String _CONTEXT = "portal";
+
+	private static final String _PATH = "/js/javascript.js";
 
 	private static Portal _portal;
 	private static final PortalUtil _portalUtil = new PortalUtil();
