@@ -62,48 +62,72 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 			String foreignColumnName) {
 
 			_tableName = tableName;
-			_foreignTableName = foreignTableName;
-			_foreignColumnName = foreignColumnName;
+
+			_columnName = foreignColumnName;
+
+			_foreignNamesArray = new String[][] {
+				new String[] {foreignTableName, foreignColumnName
+			}};
 		}
 
-		public String getForeignColumnName() {
-			return _foreignColumnName;
-		}
+		public TableUpdater(
+			String tableName, String columnName, String[][] foreignNamesArray) {
 
-		public String getForeignTableName() {
-			return _foreignTableName;
+			_tableName = tableName;
+			_columnName = columnName;
+			_foreignNamesArray = foreignNamesArray;
 		}
 
 		public String getTableName() {
 			return _tableName;
 		}
 
-		public String getUpdateSQL() {
-			StringBundler sb = new StringBundler();
+		public void update() throws IOException, SQLException {
+			for (String[] foreignNames : _foreignNamesArray) {
+				runSQL(getUpdateSQL(foreignNames[0], foreignNames[1]));
+			}
+		}
 
-			sb.append("update ");
-			sb.append(getTableName());
-			sb.append(" set companyId = (select companyId from ");
-			sb.append(getForeignTableName());
+		protected String getSelectSQL(
+			String foreignTableName, String foreignColumnName) {
+
+			StringBundler sb = new StringBundler(10);
+
+			sb.append("select companyId from ");
+			sb.append(foreignTableName);
 			sb.append(" where ");
-			sb.append(getForeignTableName());
+			sb.append(foreignTableName);
 			sb.append(".");
-			sb.append(getForeignColumnName());
+			sb.append(foreignColumnName);
 			sb.append(" = ");
 			sb.append(_tableName);
 			sb.append(".");
-			sb.append(getForeignColumnName());
+			sb.append(_columnName);
+
+			return sb.toString();
+		}
+
+		protected String getUpdateSQL(String selectSQL) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("update ");
+			sb.append(_tableName);
+			sb.append(" set companyId = (");
+			sb.append(selectSQL);
 			sb.append(")");
 
 			return sb.toString();
 		}
 
-		public void update() throws IOException, SQLException {
-			runSQL(getUpdateSQL());
+		protected String getUpdateSQL(
+			String foreignTableName, String foreignColumnName) {
+
+			return getUpdateSQL(
+				getSelectSQL(foreignTableName, foreignColumnName));
 		}
 
-		private final String _foreignColumnName;
-		private final String _foreignTableName;
+		private final String _columnName;
+		private final String[][] _foreignNamesArray;
 		private final String _tableName;
 
 	}
