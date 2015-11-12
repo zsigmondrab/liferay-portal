@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ANYONE</td>
+	<td>//select[contains(.,'Anyone')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>AVAILABLE</td>
 	<td>//div[label[contains(.,'Available')]]/select</td>
 	<td></td>
@@ -126,6 +131,11 @@
 <tr>
 	<td>SITES</td>
 	<td>//div[label[contains(.,'Sites')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TIME_ZONE</td>
+	<td>//select[contains(@id,'timeZoneId')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>CATEGORY_COLLAPSED</td>
-	<td>//div[contains(@class,'active')]//a[contains(.,'${key_category}') and contains(@class,'collapsed')]</td>
+	<td>//div[contains(@class,'sidebar-body')]/div/div[contains(@class,'active')]//a[contains(.,'${key_category}') and contains(@class,'collapsed')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORY_EXPANDED</td>
-	<td>//div[contains(@class,'active')]//a[contains(.,'${key_category}') and not(contains(@class,'collapsed'))]</td>
+	<td>//div[contains(@class,'sidebar-body')]/div/div[contains(@class,'active')]//a[contains(.,'${key_category}') and not(contains(@class,'collapsed'))]</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,6 +46,16 @@
 <tr>
 	<td>SITE</td>
 	<td>//div[contains(@id,'sites')]/ul/li/a[contains(.,'${key_site}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRIVATE_SITE_LINK</td>
+	<td>//div[contains(@id,'my_sites')]//a[contains(@id,'PrivateSiteLink') and contains(.,'${key_site}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLIC_SITE_LINK</td>
+	<td>//div[contains(@id,'my_sites')]//a[contains(@id,'PublicSiteLink') and contains(.,'${key_site}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -85,8 +95,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PRODUCT_MENU_TABS_MY_SPACE_NAVIGATION</td>
-	<td>//div[contains(.,'My Space')]/../div[contains(@class,'tab-text')]</td>
+	<td>PRODUCT_MENU_TABS_USER_NAVIGATION</td>
+	<td>//div[contains(@class,'user-tab')]//div[contains(@class,'user-icon')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -121,13 +131,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_MENU_PANEL_SCOPE</td>
+	<td>//div[contains(@class,'nav-equal-height-heading')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_MENU_PANEL_SCOPE_COG</td>
+	<td>//div[contains(@class,'nav-equal-height-heading')]//i[contains(@class,'icon-cog')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_MENU_PANEL_MENU_ITEM</td>
 	<td>//div[contains(@class,'active')]//a[.='${key_portletName}']</td>
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_MENU_PANEL_MENU_ITEM_2</td>
+	<td>xpath=(//div[contains(@class,'active')]//a[.='${key_portletName}'])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME</td>
-	<td>//div[contains(@id,'site_administration')]//a[contains(.,'${key_siteName}')]</td>
+	<td>//div[contains(@class,'toolbar-group-content') and contains(.,'${key_siteName}')]</td>
 	<td></td>
 </tr>
 <tr>

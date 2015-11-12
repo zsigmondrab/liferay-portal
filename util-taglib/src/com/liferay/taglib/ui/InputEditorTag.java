@@ -17,8 +17,8 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.editor.Editor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
-import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -39,6 +39,8 @@ import com.liferay.registry.collections.ServiceTrackerMap;
 import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.io.IOException;
+
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,8 +48,9 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.PageContext;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Brian Wing Shun Chan
@@ -140,14 +143,6 @@ public class InputEditorTag extends IncludeTag {
 
 	public void setOnInitMethod(String onInitMethod) {
 		_onInitMethod = onInitMethod;
-	}
-
-	@Override
-	public void setPageContext(PageContext pageContext) {
-		super.setPageContext(pageContext);
-
-		servletContext = PortalWebResourcesUtil.getServletContext(
-			PortalWebResourceConstants.RESOURCE_TYPE_EDITORS);
 	}
 
 	public void setPlaceholder(String placeholder) {
@@ -299,6 +294,12 @@ public class InputEditorTag extends IncludeTag {
 		return editor.getName();
 	}
 
+	protected String getEditorResourceType() {
+		Editor editor = getEditor(request);
+
+		return editor.getResourceType();
+	}
+
 	protected String getNamespace() {
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
@@ -316,7 +317,7 @@ public class InputEditorTag extends IncludeTag {
 	protected String getPage() {
 		Editor editor = getEditor(request);
 
-		return editor.getJspPath(request);
+		return editor.getJspPath();
 	}
 
 	protected RequestBackedPortletURLFactory
@@ -338,6 +339,16 @@ public class InputEditorTag extends IncludeTag {
 		}
 
 		return _TOOLBAR_SET_DEFAULT;
+	}
+
+	@Override
+	protected void includePage(String page, HttpServletResponse response)
+		throws IOException, ServletException {
+
+		servletContext = PortalWebResourcesUtil.getServletContext(
+			getEditorResourceType());
+
+		super.includePage(page, response);
 	}
 
 	@Override
@@ -375,8 +386,14 @@ public class InputEditorTag extends IncludeTag {
 			"liferay-ui:input-editor:onFocusMethod", _onFocusMethod);
 		request.setAttribute(
 			"liferay-ui:input-editor:onInitMethod", _onInitMethod);
+
+		if (Validator.isNull(_placeholder)) {
+			_placeholder = LanguageUtil.get(request, "write-your-content-here");
+		}
+
 		request.setAttribute(
 			"liferay-ui:input-editor:placeholder", _placeholder);
+
 		request.setAttribute(
 			"liferay-ui:input-editor:resizable", String.valueOf(_resizable));
 		request.setAttribute(

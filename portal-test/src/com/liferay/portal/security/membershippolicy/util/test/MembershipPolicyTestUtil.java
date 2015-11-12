@@ -190,16 +190,10 @@ public class MembershipPolicyTestUtil {
 		String jobTitle = StringPool.BLANK;
 		String smsSn =
 			"UserServiceTestSmsSn." + RandomTestUtil.nextInt() + "@liferay.com";
-		String aimSn = RandomTestUtil.randomString();
 		String facebookSn = RandomTestUtil.randomString();
-		String icqSn = RandomTestUtil.randomString();
 		String jabberSn = RandomTestUtil.randomString();
-		String msnSn =
-			"UserServiceTestMsnSn." + RandomTestUtil.nextInt() + "@liferay.com";
-		String mySpaceSn = RandomTestUtil.randomString();
 		String skypeSn = RandomTestUtil.randomString();
 		String twitterSn = RandomTestUtil.randomString();
-		String ymSn = RandomTestUtil.randomString();
 
 		List<Address> addresses = new ArrayList<>();
 		List<EmailAddress> emailAddresses = new ArrayList<>();
@@ -215,10 +209,10 @@ public class MembershipPolicyTestUtil {
 			emailAddress, facebookId, openId, false, null, languageId,
 			timeZoneId, greeting, comments, firstName, middleName, lastName,
 			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-			smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn, mySpaceSn,
-			skypeSn, twitterSn, ymSn, jobTitle, siteIds, organizationIds,
-			roleIds, userGroupRoles, userGroupIds, addresses, emailAddresses,
-			phones, websites, announcementsDelivers, serviceContext);
+			smsSn, facebookSn, jabberSn, skypeSn, twitterSn, jobTitle, siteIds,
+			organizationIds, roleIds, userGroupRoles, userGroupIds, addresses,
+			emailAddresses, phones, websites, announcementsDelivers,
+			serviceContext);
 	}
 
 	protected static Map<String, Serializable> addExpandoMap(Class<?> clazz)

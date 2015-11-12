@@ -223,15 +223,6 @@ public class GroupServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Returns the company group.
 	*
 	* @param companyId the primary key of the company
@@ -324,6 +315,15 @@ public class GroupServiceUtil {
 		java.util.Collection<com.liferay.portal.model.Portlet> portlets, int max)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getManageableSites(portlets, max);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -567,20 +567,6 @@ public class GroupServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getUserSitesGroups(
-	long, String[], int)}
-	*/
-	@Deprecated
-	public static java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
-		long userId, java.lang.String[] classNames,
-		boolean includeControlPanel, int max)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getUserSitesGroups(userId, classNames, includeControlPanel,
-			max);
-	}
-
-	/**
 	* Returns the user's groups &quot;sites&quot; associated with the group
 	* entity class names, including the Control Panel group if the user is
 	* permitted to view the Control Panel.
@@ -732,15 +718,6 @@ public class GroupServiceUtil {
 	public static int searchCount(long companyId, java.lang.String name,
 		java.lang.String description, java.lang.String[] params) {
 		return getService().searchCount(companyId, name, description, params);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

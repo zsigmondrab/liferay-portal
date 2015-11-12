@@ -22,7 +22,6 @@
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="score" type="double" />
-		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 
@@ -52,6 +51,10 @@
 		<!-- PK fields -->
 
 		<column name="statsId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
 
 		<!-- Other fields -->
 

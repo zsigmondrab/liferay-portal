@@ -119,6 +119,8 @@ public class PortletPreferencesPersistenceTest {
 
 		newPortletPreferences.setMvccVersion(RandomTestUtil.nextLong());
 
+		newPortletPreferences.setCompanyId(RandomTestUtil.nextLong());
+
 		newPortletPreferences.setOwnerId(RandomTestUtil.nextLong());
 
 		newPortletPreferences.setOwnerType(RandomTestUtil.nextInt());
@@ -137,6 +139,8 @@ public class PortletPreferencesPersistenceTest {
 			newPortletPreferences.getMvccVersion());
 		Assert.assertEquals(existingPortletPreferences.getPortletPreferencesId(),
 			newPortletPreferences.getPortletPreferencesId());
+		Assert.assertEquals(existingPortletPreferences.getCompanyId(),
+			newPortletPreferences.getCompanyId());
 		Assert.assertEquals(existingPortletPreferences.getOwnerId(),
 			newPortletPreferences.getOwnerId());
 		Assert.assertEquals(existingPortletPreferences.getOwnerType(),
@@ -246,8 +250,9 @@ public class PortletPreferencesPersistenceTest {
 
 	protected OrderByComparator<PortletPreferences> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("PortletPreferences",
-			"mvccVersion", true, "portletPreferencesId", true, "ownerId", true,
-			"ownerType", true, "plid", true, "portletId", true);
+			"mvccVersion", true, "portletPreferencesId", true, "companyId",
+			true, "ownerId", true, "ownerType", true, "plid", true,
+			"portletId", true);
 	}
 
 	@Test
@@ -356,11 +361,9 @@ public class PortletPreferencesPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = PortletPreferencesLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<PortletPreferences>() {
 				@Override
-				public void performAction(Object object) {
-					PortletPreferences portletPreferences = (PortletPreferences)object;
-
+				public void performAction(PortletPreferences portletPreferences) {
 					Assert.assertNotNull(portletPreferences);
 
 					count.increment();
@@ -479,6 +482,8 @@ public class PortletPreferencesPersistenceTest {
 		PortletPreferences portletPreferences = _persistence.create(pk);
 
 		portletPreferences.setMvccVersion(RandomTestUtil.nextLong());
+
+		portletPreferences.setCompanyId(RandomTestUtil.nextLong());
 
 		portletPreferences.setOwnerId(RandomTestUtil.nextLong());
 

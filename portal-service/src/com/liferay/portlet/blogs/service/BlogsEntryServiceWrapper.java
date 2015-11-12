@@ -82,16 +82,6 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 		_blogsEntryService.deleteEntry(entryId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _blogsEntryService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getCompanyEntries(
 		long companyId, java.util.Date displayDate, int status, int max)
@@ -184,11 +174,35 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupUserEntries(
+		long groupId, long userId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> obc) {
+		return _blogsEntryService.getGroupUserEntries(groupId, userId, status,
+			start, end, obc);
+	}
+
+	@Override
+	public int getGroupUserEntriesCount(long groupId, long userId, int status) {
+		return _blogsEntryService.getGroupUserEntriesCount(groupId, userId,
+			status);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupsEntries(
 		long companyId, long groupId, java.util.Date displayDate, int status,
 		int max) throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryService.getGroupsEntries(companyId, groupId,
 			displayDate, status, max);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _blogsEntryService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -222,16 +236,6 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 	public void restoreEntryFromTrash(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_blogsEntryService.restoreEntryFromTrash(entryId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_blogsEntryService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

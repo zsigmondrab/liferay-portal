@@ -18,9 +18,9 @@
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
-					<label>modules\core\registry-api\src</label>
+					<label>modules\core\registry-api\src\main\java</label>
 					<type>java</type>
-					<location>modules/core/registry-api/src</location>
+					<location>modules/core/registry-api/src/main/java</location>
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
@@ -380,7 +380,6 @@
 				<classpath mode="compile">lib/portal/commons-validator.jar</classpath>
 				<classpath mode="compile">lib/portal/concurrent.jar</classpath>
 				<classpath mode="compile">lib/portal/crypt.jar</classpath>
-				<classpath mode="compile">lib/portal/daim.jar</classpath>
 				<classpath mode="compile">lib/portal/daisydiff.jar</classpath>
 				<classpath mode="compile">lib/portal/displaytag.jar</classpath>
 				<classpath mode="compile">lib/portal/dom4j.jar</classpath>
@@ -400,7 +399,6 @@
 				<classpath mode="compile">lib/portal/httpcore.jar</classpath>
 				<classpath mode="compile">lib/portal/httpmime.jar</classpath>
 				<classpath mode="compile">lib/portal/ical4j.jar</classpath>
-				<classpath mode="compile">lib/portal/icq.jar</classpath>
 				<classpath mode="compile">lib/portal/im4java.jar</classpath>
 				<classpath mode="compile">lib/portal/isoparser.jar</classpath>
 				<classpath mode="compile">lib/portal/jabsorb.jar</classpath>
@@ -451,7 +449,6 @@
 				<classpath mode="compile">lib/portal/mime4j-dom.jar</classpath>
 				<classpath mode="compile">lib/portal/mimepull.jar</classpath>
 				<classpath mode="compile">lib/portal/monte-cc.jar</classpath>
-				<classpath mode="compile">lib/portal/msnm.jar</classpath>
 				<classpath mode="compile">lib/portal/nekohtml.jar</classpath>
 				<classpath mode="compile">lib/portal/netcdf.jar</classpath>
 				<classpath mode="compile">lib/portal/netty-all.jar</classpath>

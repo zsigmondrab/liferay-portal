@@ -153,23 +153,13 @@ public class ContactPersistenceTest {
 
 		newContact.setSmsSn(RandomTestUtil.randomString());
 
-		newContact.setAimSn(RandomTestUtil.randomString());
-
 		newContact.setFacebookSn(RandomTestUtil.randomString());
 
-		newContact.setIcqSn(RandomTestUtil.randomString());
-
 		newContact.setJabberSn(RandomTestUtil.randomString());
-
-		newContact.setMsnSn(RandomTestUtil.randomString());
-
-		newContact.setMySpaceSn(RandomTestUtil.randomString());
 
 		newContact.setSkypeSn(RandomTestUtil.randomString());
 
 		newContact.setTwitterSn(RandomTestUtil.randomString());
-
-		newContact.setYmSn(RandomTestUtil.randomString());
 
 		newContact.setEmployeeStatusId(RandomTestUtil.randomString());
 
@@ -225,20 +215,14 @@ public class ContactPersistenceTest {
 				existingContact.getBirthday()),
 			Time.getShortTimestamp(newContact.getBirthday()));
 		Assert.assertEquals(existingContact.getSmsSn(), newContact.getSmsSn());
-		Assert.assertEquals(existingContact.getAimSn(), newContact.getAimSn());
 		Assert.assertEquals(existingContact.getFacebookSn(),
 			newContact.getFacebookSn());
-		Assert.assertEquals(existingContact.getIcqSn(), newContact.getIcqSn());
 		Assert.assertEquals(existingContact.getJabberSn(),
 			newContact.getJabberSn());
-		Assert.assertEquals(existingContact.getMsnSn(), newContact.getMsnSn());
-		Assert.assertEquals(existingContact.getMySpaceSn(),
-			newContact.getMySpaceSn());
 		Assert.assertEquals(existingContact.getSkypeSn(),
 			newContact.getSkypeSn());
 		Assert.assertEquals(existingContact.getTwitterSn(),
 			newContact.getTwitterSn());
-		Assert.assertEquals(existingContact.getYmSn(), newContact.getYmSn());
 		Assert.assertEquals(existingContact.getEmployeeStatusId(),
 			newContact.getEmployeeStatusId());
 		Assert.assertEquals(existingContact.getEmployeeNumber(),
@@ -302,11 +286,10 @@ public class ContactPersistenceTest {
 			"classNameId", true, "classPK", true, "accountId", true,
 			"parentContactId", true, "emailAddress", true, "firstName", true,
 			"middleName", true, "lastName", true, "prefixId", true, "suffixId",
-			true, "male", true, "birthday", true, "smsSn", true, "aimSn", true,
-			"facebookSn", true, "icqSn", true, "jabberSn", true, "msnSn", true,
-			"mySpaceSn", true, "skypeSn", true, "twitterSn", true, "ymSn",
-			true, "employeeStatusId", true, "employeeNumber", true, "jobTitle",
-			true, "jobClass", true, "hoursOfOperation", true);
+			true, "male", true, "birthday", true, "smsSn", true, "facebookSn",
+			true, "jabberSn", true, "skypeSn", true, "twitterSn", true,
+			"employeeStatusId", true, "employeeNumber", true, "jobTitle", true,
+			"jobClass", true, "hoursOfOperation", true);
 	}
 
 	@Test
@@ -413,11 +396,9 @@ public class ContactPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = ContactLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Contact>() {
 				@Override
-				public void performAction(Object object) {
-					Contact contact = (Contact)object;
-
+				public void performAction(Contact contact) {
 					Assert.assertNotNull(contact);
 
 					count.increment();
@@ -544,23 +525,13 @@ public class ContactPersistenceTest {
 
 		contact.setSmsSn(RandomTestUtil.randomString());
 
-		contact.setAimSn(RandomTestUtil.randomString());
-
 		contact.setFacebookSn(RandomTestUtil.randomString());
 
-		contact.setIcqSn(RandomTestUtil.randomString());
-
 		contact.setJabberSn(RandomTestUtil.randomString());
-
-		contact.setMsnSn(RandomTestUtil.randomString());
-
-		contact.setMySpaceSn(RandomTestUtil.randomString());
 
 		contact.setSkypeSn(RandomTestUtil.randomString());
 
 		contact.setTwitterSn(RandomTestUtil.randomString());
-
-		contact.setYmSn(RandomTestUtil.randomString());
 
 		contact.setEmployeeStatusId(RandomTestUtil.randomString());
 

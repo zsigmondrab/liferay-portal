@@ -57,14 +57,10 @@ public class TeamServiceWrapper implements TeamService,
 		_teamService.deleteTeam(teamId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _teamService.getBeanIdentifier();
+	public com.liferay.portal.model.Team fetchTeam(long teamId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _teamService.fetchTeam(teamId);
 	}
 
 	@Override
@@ -72,6 +68,16 @@ public class TeamServiceWrapper implements TeamService,
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _teamService.getGroupTeams(groupId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _teamService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -121,16 +127,6 @@ public class TeamServiceWrapper implements TeamService,
 		java.lang.String description,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
 		return _teamService.searchCount(groupId, name, description, params);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_teamService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

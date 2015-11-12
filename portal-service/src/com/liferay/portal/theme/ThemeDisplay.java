@@ -63,6 +63,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Provides general configuration methods for the portal, providing access to
@@ -484,10 +485,6 @@ public class ThemeDisplay
 		return _pathContext;
 	}
 
-	public String getPathEditors() {
-		return _pathEditors;
-	}
-
 	public String getPathFlash() {
 		return _pathFlash;
 	}
@@ -699,6 +696,16 @@ public class ThemeDisplay
 	@JSON(include = false)
 	public HttpServletRequest getRequest() {
 		return _request;
+	}
+
+	/**
+	 * Returns the currently served HTTP servlet response.
+	 *
+	 * @return the currently served HTTP servlet response
+	 */
+	@JSON(include = false)
+	public HttpServletResponse getResponse() {
+		return _response;
 	}
 
 	/**
@@ -1453,10 +1460,6 @@ public class ThemeDisplay
 		_pathContext = pathContext;
 	}
 
-	public void setPathEditors(String pathEditors) {
-		_pathEditors = pathEditors;
-	}
-
 	public void setPathFlash(String pathFlash) {
 		_pathFlash = pathFlash;
 	}
@@ -1561,6 +1564,10 @@ public class ThemeDisplay
 
 	public void setRequest(HttpServletRequest request) {
 		_request = request;
+	}
+
+	public void setResponse(HttpServletResponse response) {
+		_response = response;
 	}
 
 	public void setScopeGroupId(long scopeGroupId) {
@@ -1868,7 +1875,6 @@ public class ThemeDisplay
 	private String _pathCms = StringPool.BLANK;
 	private String _pathColorSchemeImages = StringPool.BLANK;
 	private String _pathContext = StringPool.BLANK;
-	private String _pathEditors = StringPool.BLANK;
 	private String _pathFlash = StringPool.BLANK;
 	private String _pathFriendlyURLPrivateGroup = StringPool.BLANK;
 	private String _pathFriendlyURLPrivateUser = StringPool.BLANK;
@@ -1894,6 +1900,7 @@ public class ThemeDisplay
 	private long _refererGroupId;
 	private long _refererPlid;
 	private transient HttpServletRequest _request;
+	private transient HttpServletResponse _response;
 	private Group _scopeGroup;
 	private long _scopeGroupId;
 	private boolean _secure;

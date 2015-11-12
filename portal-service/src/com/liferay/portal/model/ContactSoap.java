@@ -54,15 +54,10 @@ public class ContactSoap implements Serializable {
 		soapModel.setMale(model.getMale());
 		soapModel.setBirthday(model.getBirthday());
 		soapModel.setSmsSn(model.getSmsSn());
-		soapModel.setAimSn(model.getAimSn());
 		soapModel.setFacebookSn(model.getFacebookSn());
-		soapModel.setIcqSn(model.getIcqSn());
 		soapModel.setJabberSn(model.getJabberSn());
-		soapModel.setMsnSn(model.getMsnSn());
-		soapModel.setMySpaceSn(model.getMySpaceSn());
 		soapModel.setSkypeSn(model.getSkypeSn());
 		soapModel.setTwitterSn(model.getTwitterSn());
-		soapModel.setYmSn(model.getYmSn());
 		soapModel.setEmployeeStatusId(model.getEmployeeStatusId());
 		soapModel.setEmployeeNumber(model.getEmployeeNumber());
 		soapModel.setJobTitle(model.getJobTitle());
@@ -284,14 +279,6 @@ public class ContactSoap implements Serializable {
 		_smsSn = smsSn;
 	}
 
-	public String getAimSn() {
-		return _aimSn;
-	}
-
-	public void setAimSn(String aimSn) {
-		_aimSn = aimSn;
-	}
-
 	public String getFacebookSn() {
 		return _facebookSn;
 	}
@@ -300,36 +287,12 @@ public class ContactSoap implements Serializable {
 		_facebookSn = facebookSn;
 	}
 
-	public String getIcqSn() {
-		return _icqSn;
-	}
-
-	public void setIcqSn(String icqSn) {
-		_icqSn = icqSn;
-	}
-
 	public String getJabberSn() {
 		return _jabberSn;
 	}
 
 	public void setJabberSn(String jabberSn) {
 		_jabberSn = jabberSn;
-	}
-
-	public String getMsnSn() {
-		return _msnSn;
-	}
-
-	public void setMsnSn(String msnSn) {
-		_msnSn = msnSn;
-	}
-
-	public String getMySpaceSn() {
-		return _mySpaceSn;
-	}
-
-	public void setMySpaceSn(String mySpaceSn) {
-		_mySpaceSn = mySpaceSn;
 	}
 
 	public String getSkypeSn() {
@@ -346,14 +309,6 @@ public class ContactSoap implements Serializable {
 
 	public void setTwitterSn(String twitterSn) {
 		_twitterSn = twitterSn;
-	}
-
-	public String getYmSn() {
-		return _ymSn;
-	}
-
-	public void setYmSn(String ymSn) {
-		_ymSn = ymSn;
 	}
 
 	public String getEmployeeStatusId() {
@@ -416,15 +371,10 @@ public class ContactSoap implements Serializable {
 	private boolean _male;
 	private Date _birthday;
 	private String _smsSn;
-	private String _aimSn;
 	private String _facebookSn;
-	private String _icqSn;
 	private String _jabberSn;
-	private String _msnSn;
-	private String _mySpaceSn;
 	private String _skypeSn;
 	private String _twitterSn;
-	private String _ymSn;
 	private String _employeeStatusId;
 	private String _employeeNumber;
 	private String _jobTitle;

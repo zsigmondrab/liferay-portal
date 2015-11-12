@@ -58,7 +58,6 @@
 		<column name="typeId" type="long" />
 		<column name="mailing" type="boolean" />
 		<column name="primary" type="boolean" />
-		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 
@@ -111,6 +110,7 @@
 
 		<!-- Audit fields -->
 
+		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 
 		<!-- Other fields -->
@@ -232,15 +232,10 @@
 		<column name="male" type="boolean" />
 		<column name="birthday" type="Date" />
 		<column name="smsSn" type="String" />
-		<column name="aimSn" type="String" />
 		<column name="facebookSn" type="String" />
-		<column name="icqSn" type="String" />
 		<column name="jabberSn" type="String" />
-		<column name="msnSn" type="String" />
-		<column name="mySpaceSn" type="String" />
 		<column name="skypeSn" type="String" />
 		<column name="twitterSn" type="String" />
-		<column name="ymSn" type="String" />
 		<column name="employeeStatusId" type="String" />
 		<column name="employeeNumber" type="String" />
 		<column name="jobTitle" type="String" />
@@ -327,7 +322,6 @@
 		<column name="address" type="String" />
 		<column name="typeId" type="long" />
 		<column name="primary" type="boolean" />
-		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 
@@ -530,6 +524,7 @@
 
 		<!-- Audit fields -->
 
+		<column name="companyId" type="long" />
 		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
@@ -806,7 +801,6 @@
 		<column name="description" type="String" localized="true" />
 		<column name="settings" type="String" />
 		<column name="active" type="boolean" />
-		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 
@@ -1079,7 +1073,6 @@
 		<column name="description" type="String" localized="true" />
 		<column name="settings" type="String" />
 		<column name="active" type="boolean" />
-		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 
@@ -1220,7 +1213,6 @@
 		<column name="statusId" type="long" />
 		<column name="comments" type="String" />
 		<column name="logoId" type="long" />
-		<column name="lastPublishDate" type="Date" />
 
 		<!-- Relationships -->
 
@@ -1289,6 +1281,10 @@
 		<column name="groupId" type="long" primary="true" />
 		<column name="roleId" type="long" primary="true" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
@@ -1303,6 +1299,10 @@
 		<!-- PK fields -->
 
 		<column name="orgLaborId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
 
 		<!-- Other fields -->
 
@@ -1383,7 +1383,6 @@
 		<column name="requireUnlock" type="boolean" />
 		<column name="resetFailureCount" type="long" />
 		<column name="resetTicketMaxAge" type="long" />
-		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 
@@ -1411,6 +1410,10 @@
 		<!-- PK fields -->
 
 		<column name="passwordPolicyRelId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
 
 		<!-- Other fields -->
 
@@ -1440,6 +1443,7 @@
 
 		<!-- Audit fields -->
 
+		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="createDate" type="Date" />
 
@@ -1497,7 +1501,6 @@
 		<column name="extension" type="String" />
 		<column name="typeId" type="long" />
 		<column name="primary" type="boolean" />
-		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 
@@ -1682,6 +1685,10 @@
 		<!-- PK fields -->
 
 		<column name="portletPreferencesId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
 
 		<!-- Other fields -->
 
@@ -1988,6 +1995,10 @@
 
 		<column name="resourceBlockPermissionId" type="long" primary="true" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Other fields -->
 
 		<column name="resourceBlockId" type="long" />
@@ -2135,7 +2146,6 @@
 		<column name="description" type="String" localized="true" />
 		<column name="type" type="int" />
 		<column name="subtype" type="String" />
-		<column name="lastPublishDate" type="Date" />
 
 		<!-- Relationships -->
 
@@ -2490,7 +2500,6 @@
 		<column name="lockoutDate" type="Date" />
 		<column name="agreedToTermsOfUse" type="boolean" />
 		<column name="emailAddressVerified" type="boolean" />
-		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 
 		<!-- Relationships -->
@@ -2668,6 +2677,10 @@
 		<column name="groupId" type="long" primary="true" />
 		<column name="roleId" type="long" primary="true" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Finder methods -->
 
 		<finder name="UserGroupId" return-type="Collection">
@@ -2700,6 +2713,10 @@
 		<column name="userId" type="long" primary="true" />
 		<column name="groupId" type="long" primary="true" accessor="true" />
 		<column name="roleId" type="long" primary="true" accessor="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
 
 		<!-- Finder methods -->
 
@@ -2735,6 +2752,7 @@
 
 		<!-- Audit fields -->
 
+		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 
 		<!-- Other fields -->
@@ -2915,6 +2933,10 @@
 		<!-- PK fields -->
 
 		<column name="userTrackerPathId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
 
 		<!-- Other fields -->
 
@@ -3206,6 +3228,7 @@
 		<exception>PasswordPolicyName</exception>
 		<exception>PendingBackgroundTask</exception>
 		<exception>PhoneNumber</exception>
+		<exception>PhoneNumberExtension</exception>
 		<exception>PortletActive</exception>
 		<exception>PortletDefaultPreferences</exception>
 		<exception>PortletId</exception>

@@ -48,16 +48,7 @@ boolean modePrint = layoutTypePortlet.hasModePrintPortletId(portletId);
 
 PortletPreferencesIds portletPreferencesIds = PortletPreferencesFactoryUtil.getPortletPreferencesIds(request, portletId);
 
-PortletPreferences portletPreferences = null;
-
-PortletPreferences renderPortletPreferences = (PortletPreferences)request.getAttribute(WebKeys.RENDER_PORTLET_PREFERENCES);
-
-if (renderPortletPreferences == null) {
-	portletPreferences = PortletPreferencesLocalServiceUtil.getStrictPreferences(portletPreferencesIds);
-}
-else {
-	portletPreferences = renderPortletPreferences;
-}
+PortletPreferences portletPreferences = PortletPreferencesLocalServiceUtil.getStrictPreferences(portletPreferencesIds);
 
 PortletPreferences portletSetup = PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(layout, portletId);
 
@@ -343,6 +334,20 @@ if (siteGroup.isStaged() && !siteGroup.isStagedRemotely() && !siteGroup.isStaged
 	themeDisplay.setSiteGroupId(siteGroup.getGroupId());
 }
 
+// Portlet decorate
+
+boolean tilesPortletDecorate = GetterUtil.getBoolean(TilesAttributeUtil.getTilesAttribute(pageContext, "portlet_decorate"), true);
+
+boolean portletDecorate = tilesPortletDecorate;
+
+Boolean portletDecorateObj = (Boolean)request.getAttribute(WebKeys.PORTLET_DECORATE);
+
+if (portletDecorateObj != null) {
+	portletDecorate = portletDecorateObj.booleanValue();
+
+	request.removeAttribute(WebKeys.PORTLET_DECORATE);
+}
+
 portletDisplay.recycle();
 
 portletDisplay.setActive(portlet.isActive());
@@ -361,6 +366,8 @@ portletDisplay.setModePreview(modePreview);
 portletDisplay.setModePrint(modePrint);
 portletDisplay.setModeView(portletMode.equals(PortletMode.VIEW));
 portletDisplay.setNamespace(PortalUtil.getPortletNamespace(portletId));
+portletDisplay.setPortletDecorate(portletDecorate);
+portletDisplay.setPortletDisplayName(PortalUtil.getPortletTitle(renderRequestImpl));
 portletDisplay.setPortletName(portletConfig.getPortletName());
 portletDisplay.setPortletResource(portletResource);
 portletDisplay.setResourcePK(portletPrimaryKey);
@@ -428,6 +435,8 @@ if (portlet.getConfigurationActionInstance() != null) {
 	urlConfiguration.setParameter("mvcPath", "/edit_configuration.jsp");
 
 	String settingsScope = (String)request.getAttribute(WebKeys.SETTINGS_SCOPE);
+
+	settingsScope = ParamUtil.get(request, "settingsScope", settingsScope);
 
 	if (Validator.isNotNull(settingsScope)) {
 		urlConfiguration.setParameter("settingsScope", settingsScope);
@@ -670,7 +679,7 @@ PortletURLImpl urlStaging = new PortletURLImpl(request, PortletKeys.EXPORT_IMPOR
 
 urlStaging.setWindowState(LiferayWindowState.POP_UP);
 
-urlStaging.setParameter("mvcRenderCommandName", "staging");
+urlStaging.setParameter("mvcRenderCommandName", "publishPortlet");
 urlStaging.setParameter("cmd", Constants.PUBLISH_TO_LIVE);
 urlStaging.setParameter("redirect", currentURL);
 urlStaging.setParameter("returnToFullPageURL", currentURL);
@@ -849,7 +858,7 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 		}
 	}
 
-	if (portletDecorator != null) {
+	if ((portletDecorator != null) && portletDisplay.isPortletDecorate()) {
 		portletDisplay.setPortletDecoratorId(portletDecorator.getPortletDecoratorId());
 
 		cssClasses += StringPool.SPACE + portletDecorator.getCssClass();

@@ -1,18 +1,20 @@
 buildService {
-	apiDirName = "../wiki-api/src"
+	apiDirName = "../wiki-api/src/main/java"
 	autoNamespaceTables = false
-	testDirName = "../wiki-test/test/integration"
+	testDirName = "../wiki-test/src/testIntegration/java"
 }
 
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.2"
 	compile group: "com.liferay", name: "org.freemarker", version: "2.3.17.LIFERAY-PATCHED-1"
+	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
 	compile group: "rome", name: "rome", version: "1.0"
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")
 	compile project(":apps:portlet-display-template:portlet-display-template")
 	compile project(":apps:wiki:wiki-api")
 	compile project(":core:osgi-service-tracker-map")
+	compile project(":portal:portal-upgrade")
 
 	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 }

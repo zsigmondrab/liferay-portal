@@ -821,16 +821,6 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _layoutLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns the primary key of the default layout for the group
 	*
 	* @param groupId the primary key of the group
@@ -1215,6 +1205,16 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 		return _layoutLocalService.getNullFriendlyURLLayouts();
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _layoutLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.Layout getParentLayout(
 		com.liferay.portal.model.Layout layout)
@@ -1257,6 +1257,12 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutLocalService.hasLayoutSetPrototypeLayout(layoutSetPrototypeUuid,
 			companyId, layoutUuid);
+	}
+
+	@Override
+	public boolean hasLayouts(com.liferay.portal.model.Group group)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutLocalService.hasLayouts(group);
 	}
 
 	@Override
@@ -1712,16 +1718,6 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutLocalService.importPortletInfoInBackground(userId,
 			taskName, portletId, parameterMap, is);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_layoutLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

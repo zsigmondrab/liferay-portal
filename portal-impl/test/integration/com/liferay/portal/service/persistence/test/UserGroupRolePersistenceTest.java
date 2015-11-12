@@ -116,6 +116,8 @@ public class UserGroupRolePersistenceTest {
 
 		newUserGroupRole.setMvccVersion(RandomTestUtil.nextLong());
 
+		newUserGroupRole.setCompanyId(RandomTestUtil.nextLong());
+
 		_userGroupRoles.add(_persistence.update(newUserGroupRole));
 
 		UserGroupRole existingUserGroupRole = _persistence.findByPrimaryKey(newUserGroupRole.getPrimaryKey());
@@ -128,6 +130,8 @@ public class UserGroupRolePersistenceTest {
 			newUserGroupRole.getGroupId());
 		Assert.assertEquals(existingUserGroupRole.getRoleId(),
 			newUserGroupRole.getRoleId());
+		Assert.assertEquals(existingUserGroupRole.getCompanyId(),
+			newUserGroupRole.getCompanyId());
 	}
 
 	@Test
@@ -294,11 +298,9 @@ public class UserGroupRolePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = UserGroupRoleLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<UserGroupRole>() {
 				@Override
-				public void performAction(Object object) {
-					UserGroupRole userGroupRole = (UserGroupRole)object;
-
+				public void performAction(UserGroupRole userGroupRole) {
 					Assert.assertNotNull(userGroupRole);
 
 					count.increment();
@@ -397,6 +399,8 @@ public class UserGroupRolePersistenceTest {
 		UserGroupRole userGroupRole = _persistence.create(pk);
 
 		userGroupRole.setMvccVersion(RandomTestUtil.nextLong());
+
+		userGroupRole.setCompanyId(RandomTestUtil.nextLong());
 
 		_userGroupRoles.add(_persistence.update(userGroupRole));
 

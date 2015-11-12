@@ -152,11 +152,22 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 				rowClassNameAlternate: '<%= _ROW_CLASS_NAME_ALTERNATE %>',
 				rowClassNameAlternateHover: '<%= _ROW_CLASS_NAME_ALTERNATE_HOVER %>',
 				rowClassNameBody: '<%= _ROW_CLASS_NAME_BODY %>',
-				rowClassNameBodyHover: '<%= _ROW_CLASS_NAME_BODY %>'
+				rowClassNameBodyHover: '<%= _ROW_CLASS_NAME_BODY %>',
+				rowSelector: 'li.selectable'
 			}
 		).render();
 
 		searchContainer.updateDataStore(<%= primaryKeysJSONArray.toString() %>);
+
+		var destroySearchContainer = function(event) {
+			if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+				searchContainer.destroy();
+
+				Liferay.detach('destroyPortlet', destroySearchContainer);
+			}
+		};
+
+		Liferay.on('destroyPortlet', destroySearchContainer);
 	</aui:script>
 </c:if>
 

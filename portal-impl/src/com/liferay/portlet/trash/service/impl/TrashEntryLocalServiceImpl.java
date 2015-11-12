@@ -81,6 +81,13 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		User user = userPersistence.findByPrimaryKey(userId);
 		long classNameId = classNameLocalService.getClassNameId(className);
 
+		TrashEntry trashEntry = trashEntryPersistence.fetchByC_C(
+			classNameId, classPK);
+
+		if (trashEntry != null) {
+			return trashEntry;
+		}
+
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			className);
 
@@ -89,7 +96,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 		long entryId = counterLocalService.increment();
 
-		TrashEntry trashEntry = trashEntryPersistence.create(entryId);
+		trashEntry = trashEntryPersistence.create(entryId);
 
 		trashEntry.setGroupId(groupId);
 		trashEntry.setCompanyId(user.getCompanyId());
@@ -133,13 +140,11 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 			trashEntryLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<TrashEntry>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(TrashEntry trashEntry)
 					throws PortalException {
-
-					TrashEntry trashEntry = (TrashEntry)object;
 
 					Date createDate = trashEntry.getCreateDate();
 

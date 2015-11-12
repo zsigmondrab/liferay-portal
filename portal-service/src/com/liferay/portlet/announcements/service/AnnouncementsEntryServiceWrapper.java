@@ -80,14 +80,11 @@ public class AnnouncementsEntryServiceWrapper
 		_announcementsEntryService.deleteEntry(entryId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _announcementsEntryService.getBeanIdentifier();
+	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchAnnouncementsEntry(
+		long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _announcementsEntryService.fetchAnnouncementsEntry(entryId);
 	}
 
 	@Override
@@ -98,13 +95,13 @@ public class AnnouncementsEntryServiceWrapper
 	}
 
 	/**
-	* Sets the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @param beanIdentifier the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_announcementsEntryService.setBeanIdentifier(beanIdentifier);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _announcementsEntryService.getOSGiServiceIdentifier();
 	}
 
 	@Override

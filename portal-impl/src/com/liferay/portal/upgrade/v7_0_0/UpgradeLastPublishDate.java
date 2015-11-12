@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradeLastPublishDate;
-import com.liferay.portal.util.PortletKeys;
 
 /**
  * @author Levente Hudák
@@ -30,10 +29,7 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 		upgradeLayoutsAdmin();
 		upgradeMessageBoards();
 		upgradeMobileDeviceRules();
-		upgradeRatings();
-		upgradeRolesAdmin();
 		upgradeSiteAdmin();
-		upgradeUsersAdmin();
 	}
 
 	protected void upgradeAssetCategoriesAdmin() throws Exception {
@@ -53,7 +49,7 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 	protected void upgradeBlogs() throws Exception {
 		runSQL("alter table BlogsEntry add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.BLOGS, "BlogsEntry");
+		updateLastPublishDates("33", "BlogsEntry");
 	}
 
 	protected void upgradeDocumentLibrary() throws Exception {
@@ -89,11 +85,11 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 	protected void upgradeLayoutsAdmin() throws Exception {
 		runSQL("alter table Layout add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.LAYOUTS_ADMIN, "Layout");
+		updateLastPublishDates("88", "Layout");
 
 		runSQL("alter table LayoutFriendlyURL add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.LAYOUTS_ADMIN, "LayoutFriendlyURL");
+		updateLastPublishDates("88", "LayoutFriendlyURL");
 	}
 
 	protected void upgradeMessageBoards() throws Exception {
@@ -141,48 +137,10 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 		updateLastPublishDates("178", "MDRRuleGroupInstance");
 	}
 
-	protected void upgradeRatings() throws Exception {
-		runSQL("alter table RatingsEntry add lastPublishDate DATE null");
-
-		updateLastPublishDates("108", "RatingsEntry");
-	}
-
-	protected void upgradeRolesAdmin() throws Exception {
-		runSQL("alter table PasswordPolicy add lastPublishDate DATE null");
-
-		updateLastPublishDates("128", "PasswordPolicy");
-
-		runSQL("alter table Role_ add lastPublishDate DATE null");
-
-		updateLastPublishDates("128", "Role_");
-	}
-
 	protected void upgradeSiteAdmin() throws Exception {
 		runSQL("alter table Team add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.SITE_ADMIN, "Team");
-	}
-
-	protected void upgradeUsersAdmin() throws Exception {
-		runSQL("alter table Address add lastPublishDate DATE null");
-
-		updateLastPublishDates(PortletKeys.USERS_ADMIN, "Address");
-
-		runSQL("alter table EmailAddress add lastPublishDate DATE null");
-
-		updateLastPublishDates(PortletKeys.USERS_ADMIN, "EmailAddress");
-
-		runSQL("alter table Organization_ add lastPublishDate DATE null");
-
-		updateLastPublishDates(PortletKeys.USERS_ADMIN, "Organization_");
-
-		runSQL("alter table Phone add lastPublishDate DATE null");
-
-		updateLastPublishDates(PortletKeys.USERS_ADMIN, "Phone");
-
-		runSQL("alter table User_ add lastPublishDate DATE null");
-
-		updateLastPublishDates(PortletKeys.USERS_ADMIN, "User_");
+		updateLastPublishDates("134", "Team");
 	}
 
 }

@@ -25,7 +25,7 @@
 	<command name="addCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="NavBar#ADD" value1="Add" />
+		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="AssertClick" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
 
 		<if>
@@ -312,6 +312,7 @@
 		</if>
 
 		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
+
 		<execute function="Type" locator1="DocumentsAndMediaEditDocument#TITLE_FIELD" value1="${dmDocumentTitle}" />
 
 		<if>
@@ -995,14 +996,20 @@
 		<execute function="AssertClick" locator1="MediaGallery#IMAGE_TITLE" value1="${mgDocumentTitle}" />
 
 		<execute function="AssertTextEquals" locator1="MediaGallery#MEDIA_CAPTION" value1="${mgDocumentTitle} - ${mgDocumentDescription}" />
+
+		<execute function="Click" locator1="PGMediagalleryMedia#CLOSE" />
+
 		<execute function="Click" locator1="MediaGallery#ENTRY_EDIT_ICON" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${mgDocumentTitleEdit}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${mgDocumentTitleEdit}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${mgDocumentDescriptionEdit}" />
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="MediaGallery#IMAGE_TITLE" value1="${mgDocumentTitleEdit}" />
+
+		<var name="key_mgDocumentTitle" value="${mgDocumentTitleEdit}" />
+
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${mgDocumentTitleEdit}" />
 	</command>
 
 	<command name="editPublishPG">
@@ -2231,6 +2238,7 @@
 	</command>
 
 	<command name="viewPGViaAP">
+		<var name="key_assetContent" value="${dmDocumentDescription}" />
 		<var name="key_assetTitle" value="${dmDocumentTitle}" />
 
 		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${dmDocumentTitle}" />
@@ -2272,7 +2280,7 @@
 			<equals arg1="${documentAdded}" arg2="true" />
 			<then>
 				<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
-				<execute function="AssertClick" locator1="DocumentsAndMedia#LIVE_BUTTON" value1="Live" />
+				<execute function="AssertClick" locator1="Staging#LIVE_BUTTON" value1="Live" />
 
 				<execute function="AssertTextNotPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 				<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no documents or media files in this folder." />
@@ -2282,7 +2290,7 @@
 				<then>
 					<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no documents or media files in this folder." />
 
-					<execute function="AssertClick" locator1="DocumentsAndMedia#LIVE_BUTTON" value1="Live" />
+					<execute function="AssertClick" locator1="Staging#LIVE_BUTTON" value1="Live" />
 					<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no documents or media files in this folder." />
 				</then>
 			</elseif>

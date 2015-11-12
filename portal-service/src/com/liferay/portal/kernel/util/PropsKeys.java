@@ -63,10 +63,6 @@ public interface PropsKeys {
 
 	public static final String ADMIN_SYNC_DEFAULT_ASSOCIATIONS = "admin.sync.default.associations";
 
-	public static final String AIM_LOGIN = "aim.login";
-
-	public static final String AIM_PASSWORD = "aim.password";
-
 	public static final String ANNOUNCEMENTS_EMAIL_BODY = "announcements.email.body";
 
 	public static final String ANNOUNCEMENTS_EMAIL_FROM_ADDRESS = "announcements.email.from.address";
@@ -859,12 +855,6 @@ public interface PropsKeys {
 
 	public static final String HTTP_HEADER_VERSION_VERBOSITY = "http.header.version.verbosity";
 
-	public static final String ICQ_JAR = "icq.jar";
-
-	public static final String ICQ_LOGIN = "icq.login";
-
-	public static final String ICQ_PASSWORD = "icq.password";
-
 	public static final String IFRAME_PASSWORD_PASSWORD_TOKEN_ROLE = "iframe.password.token.role";
 
 	public static final String IMAGE_AUTO_SCALE = "image.auto.scale";
@@ -890,6 +880,8 @@ public interface PropsKeys {
 	public static final String IMAGEMAGICK_GLOBAL_SEARCH_PATH = "imagemagick.global.search.path";
 
 	public static final String IMAGEMAGICK_RESOURCE_LIMIT = "imagemagick.resource.limit.";
+
+	public static final String INDEX_COMMIT_IMMEDIATELY = "index.commit.immediately";
 
 	public static final String INDEX_DATE_FORMAT_PATTERN = "index.date.format.pattern";
 
@@ -1313,10 +1305,6 @@ public interface PropsKeys {
 
 	public static final String MAIL_BATCH_SIZE = "mail.batch.size";
 
-	public static final String MAIL_HOOK_CYRUS_ADD_USER = "mail.hook.cyrus.add.user";
-
-	public static final String MAIL_HOOK_CYRUS_DELETE_USER = "mail.hook.cyrus.delete.user";
-
 	public static final String MAIL_HOOK_CYRUS_HOME = "mail.hook.cyrus.home";
 
 	public static final String MAIL_HOOK_FUSEMAIL_ACCOUNT_TYPE = "mail.hook.fusemail.account.type";
@@ -1516,10 +1504,6 @@ public interface PropsKeys {
 	public static final String MODULE_FRAMEWORK_WEB_GENERATOR_HEADERS = "module.framework.web.generator.headers.";
 
 	public static final String MODULE_FRAMEWORK_WEB_GENERATOR_JSP_COMPILER_DEPENDENCIES = "module.framework.web.generator.jsp.compiler.dependencies";
-
-	public static final String MSN_LOGIN = "msn.login";
-
-	public static final String MSN_PASSWORD = "msn.password";
 
 	public static final String MULTI_VALUE_MAP = "multi.value.map.";
 
@@ -2518,10 +2502,6 @@ public interface PropsKeys {
 	public static final String XUGGLER_JAR_OPTIONS = "xuggler.jar.options";
 
 	public static final String XUGGLER_JAR_URL = "xuggler.jar.url";
-
-	public static final String YM_LOGIN = "ym.login";
-
-	public static final String YM_PASSWORD = "ym.password";
 
 	public static final String YUI_COMPRESSOR_CSS_LINE_BREAK = "yui.compressor.css.line.break";
 

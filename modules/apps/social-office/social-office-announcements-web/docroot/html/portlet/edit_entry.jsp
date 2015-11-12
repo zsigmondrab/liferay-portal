@@ -23,7 +23,7 @@ String redirectMvcPath = HttpUtil.getParameter(HttpUtil.decodeURL(redirect), ren
 
 long entryId = ParamUtil.getLong(request, "entryId");
 
-AnnouncementsEntry entry = AnnouncementsEntryLocalServiceUtil.fetchAnnouncementsEntry(entryId);
+AnnouncementsEntry entry = AnnouncementsEntryServiceUtil.fetchAnnouncementsEntry(entryId);
 
 String content = BeanParamUtil.getString(entry, request, "content");
 
@@ -136,16 +136,15 @@ if (entry == null) {
 	<div class="clearfix entry hide" id="<portlet:namespace />preview">
 		<div class="user-portrait">
 			<span class="avatar">
-
-				<%
-				User currentUser = UserLocalServiceUtil.getUserById(themeDisplay.getUserId());
-				%>
-
-				<a href="<%= currentUser.getDisplayURL(themeDisplay) %>">
-					<img alt="<%= HtmlUtil.escapeAttribute(currentUser.getFullName()) %>" src="<%= currentUser.getPortraitURL(themeDisplay) %>" />
-				</a>
+				<liferay-ui:user-portrait
+					userId="<%= themeDisplay.getUserId() %>"
+				/>
 			</span>
 		</div>
+
+		<%
+		User currentUser = UserLocalServiceUtil.getUserById(themeDisplay.getUserId());
+		%>
 
 		<div class="entry-header">
 			<div class="entry-action">
@@ -153,7 +152,7 @@ if (entry == null) {
 			</div>
 
 			<div class="entry-time">
-				<%= LanguageUtil.get(request, "about-a-minute-ago") %>
+				<liferay-ui:message key="about-a-minute-ago" />
 			</div>
 		</div>
 
@@ -237,8 +236,6 @@ if (entry == null) {
 		var previewContent = A.one('#<portlet:namespace />entryContent');
 
 		previewContent.html(content);
-
-		var previewFooter = A.one('#<portlet:namespace />entryFooter');
 
 		if (previewContent.height() > 75) {
 			var toggle = preview.one('.toggle');
