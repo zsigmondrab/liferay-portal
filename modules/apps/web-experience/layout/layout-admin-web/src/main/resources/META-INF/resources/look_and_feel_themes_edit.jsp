@@ -17,6 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
+Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
@@ -29,6 +30,12 @@ else {
 	selTheme = selLayoutSet.getTheme();
 }
 %>
+
+<c:if test="<%= selLayout == null && liveGroup.isLayoutSetPrototype() && !PropsValues.LAYOUT_SET_PROTOTYPE_PROPAGATE_THEME %>">
+	<div class="alert alert-warning">
+		<liferay-ui:message key="modifying-the-site-template-theme-only-affects-sites-that-are-not-yet-created" />
+	</div>
+</c:if>
 
 <h5 class="text-default"><liferay-ui:message key="current-theme" /></h5>
 
