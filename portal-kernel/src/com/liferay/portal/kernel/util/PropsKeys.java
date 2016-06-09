@@ -1081,6 +1081,8 @@ public interface PropsKeys {
 
 	public static final String LAYOUT_SET_PROTOTYPE_PROPAGATE_LOGO = "layout.set.prototype.propagate.logo";
 
+	public static final String LAYOUT_SET_PROTOTYPE_PROPAGATE_THEME = "layout.set.prototype.propagate.theme";
+
 	public static final String LAYOUT_SHOW_HTTP_STATUS = "layout.show.http.status";
 
 	public static final String LAYOUT_SHOW_PORTLET_ACCESS_DENIED = "layout.show.portlet.access.denied";
