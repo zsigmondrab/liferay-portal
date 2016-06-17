@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.exportimport.kernel.staging.LayoutRevisionThreadLocal;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
@@ -289,6 +290,7 @@ public class PortletPreferencesLocalServiceStagingAdvice
 
 		arguments[2] = layoutRevision.getLayoutRevisionId();
 
+		LayoutRevisionThreadLocal.setLayoutRevisionId(0);
 		ProxiedLayoutsThreadLocal.clearProxiedLayouts();
 
 		return method.invoke(methodInvocation.getThis(), arguments);
