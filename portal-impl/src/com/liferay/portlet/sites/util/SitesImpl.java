@@ -1792,9 +1792,6 @@ public class SitesImpl implements Sites {
 			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
 			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
-			PortletDataHandlerKeys.THEME_REFERENCE,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
 			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE,
 			new String[] {Boolean.FALSE.toString()});
 		parameterMap.put(
@@ -1824,6 +1821,17 @@ public class SitesImpl implements Sites {
 			else {
 				parameterMap.put(
 					PortletDataHandlerKeys.LOGO,
+					new String[] {Boolean.FALSE.toString()});
+			}
+
+			if (PropsValues.LAYOUT_SET_PROTOTYPE_PROPAGATE_THEME) {
+				parameterMap.put(
+					PortletDataHandlerKeys.THEME_REFERENCE,
+					new String[] {Boolean.TRUE.toString()});
+			}
+			else {
+				parameterMap.put(
+					PortletDataHandlerKeys.THEME_REFERENCE,
 					new String[] {Boolean.FALSE.toString()});
 			}
 
