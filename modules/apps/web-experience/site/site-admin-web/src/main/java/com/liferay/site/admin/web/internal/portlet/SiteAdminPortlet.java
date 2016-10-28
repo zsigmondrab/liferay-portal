@@ -655,6 +655,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 			// Update group
 
 			liveGroup = groupLocalService.getGroup(liveGroupId);
+			parentGroupId = liveGroup.getParentGroupId();
 
 			nameMap = LocalizationUtil.getLocalizationMap(
 				actionRequest, "name", liveGroup.getNameMap());
