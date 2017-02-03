@@ -154,17 +154,13 @@ public class JournalConverterImpl implements JournalConverter {
 			}
 		}
 
-		String content;
-
 		try {
-			content = XMLUtil.formatXML(document.asXML());
+			return XMLUtil.formatXML(document.asXML());
 		}
 		catch (Exception e) {
 			throw new ArticleContentException(
 				"Unable to read content with an XML parser", e);
 		}
-
-		return content;
 	}
 
 	@Override
