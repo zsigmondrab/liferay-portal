@@ -16,6 +16,7 @@ package com.liferay.staging.bar.web.internal.product.navigation.control.menu;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -23,6 +24,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
+
+import java.util.Objects;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -89,6 +92,12 @@ public class StagingProductNavigationControlMenuEntry
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.isTypeControlPanel()) {
+			return false;
+		}
+
+		if (Objects.equals(
+				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY)) {
+
 			return false;
 		}
 
