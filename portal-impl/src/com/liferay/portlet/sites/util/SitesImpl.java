@@ -1137,14 +1137,26 @@ public class SitesImpl implements Sites {
 			return false;
 		}
 
+		UnicodeProperties layoutSetPrototypeSettingsUnicodeProperties =
+			layoutSetPrototype.getSettingsProperties();
+
+		boolean readyForPropagation = GetterUtil.getBoolean(
+			layoutSetPrototypeSettingsUnicodeProperties.getProperty(
+				"readyForPropagation"),
+			true);
+
+		if (!readyForPropagation && !(lastMergeTime == 0)) {
+			return false;
+		}
+
 		LayoutSet layoutSetPrototypeLayoutSet =
 			layoutSetPrototype.getLayoutSet();
 
-		UnicodeProperties layoutSetPrototypeSettingsUnicodeProperties =
+		UnicodeProperties layoutSetPrototypeLayoutSetSettingsUnicodeProperties =
 			layoutSetPrototypeLayoutSet.getSettingsProperties();
 
 		int mergeFailCount = GetterUtil.getInteger(
-			layoutSetPrototypeSettingsUnicodeProperties.getProperty(
+			layoutSetPrototypeLayoutSetSettingsUnicodeProperties.getProperty(
 				MERGE_FAIL_COUNT));
 
 		if (mergeFailCount >
